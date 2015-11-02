@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+    <!--<context:annotation-config/>-->
+
+    <import resource="entity.xml"/>
+
+    <bean id="auditoriumDAO" class="com.epam.spring.DAO.AuditoriumDAO">
+        <constructor-arg ref="auditorium1"/>
+        <constructor-arg ref="auditorium2"/>
+    </bean>
+
+    <bean id="discountStrategyDAO" class="com.epam.spring.DAO.DiscountStrategyDAO">
+        <constructor-arg ref="discountStrategy"/>
+    </bean>
+
+    <bean id="eventDAO" class="com.epam.spring.DAO.EventDAO">
+        <constructor-arg ref="event1"/>
+        <constructor-arg ref="event2"/>
+    </bean>
+
+    <bean id="userDAO" class="com.epam.spring.DAO.UserDAO">
+        <constructor-arg ref="user1"/>
+        <constructor-arg ref="user2"/>
+    </bean>
+
+    <bean id="ticketDAO" class="com.epam.spring.DAO.TicketDAO">
+        <constructor-arg ref="ticket1"/>
+        <constructor-arg ref="ticket2"/>
+        <constructor-arg ref="ticket3"/>
+        <constructor-arg ref="ticket4"/>
+        <constructor-arg ref="ticket5"/>
+        <constructor-arg ref="ticket6"/>
+        <constructor-arg ref="ticket7"/>
+        <constructor-arg ref="ticket8"/>
+        <constructor-arg ref="ticket9"/>
+        <constructor-arg ref="ticket10"/>
+        <constructor-arg ref="event1"/>
+    </bean>
+
+
+</beans>
