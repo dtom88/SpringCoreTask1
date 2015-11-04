@@ -30,10 +30,10 @@
         <constructor-arg ref="vipSeatsList"/>
     </bean>
 
-    <bean id="discountStrategy" class="com.epam.spring.entity.DiscountStrategy">
-        <constructor-arg value="${birthdayDiscount}"/>
-        <constructor-arg value="${tenthTicketDiscount}"/>
-    </bean>
+    <util:list id="auditoriums" list-class="java.util.ArrayList">
+        <ref bean="auditorium1"/>
+        <ref bean="auditorium2"/>
+    </util:list>
 
     <bean id="eventDate1" class="java.time.LocalDate" factory-method="of">
             <constructor-arg value="${evYear1}" type="int"/>
@@ -41,7 +41,7 @@
             <constructor-arg value="${evDay1}" type="int"/>
     </bean>
 
-    <bean id="event1" class="com.epam.spring.entity.Event">
+    <bean id="event1" class="com.epam.spring.entity.Event" autowire="byName">
         <constructor-arg value="${id1}"/>
         <constructor-arg value="${evName1}"/>
         <constructor-arg ref="eventDate1"/>
@@ -56,7 +56,7 @@
         <constructor-arg value="${evDay2}" type="int"/>
     </bean>
 
-    <bean id="event2" class="com.epam.spring.entity.Event">
+    <bean id="event2" class="com.epam.spring.entity.Event" autowire="byName">
         <constructor-arg value="${id2}"/>
         <constructor-arg value="${evName2}"/>
         <constructor-arg ref="eventDate2"/>
@@ -71,7 +71,7 @@
         <constructor-arg value="${bDay1}" type="int"/>
     </bean>
 
-    <bean id="user1" class="com.epam.spring.entity.User">
+    <bean id="user1" class="com.epam.spring.entity.User" autowire="byName">
         <constructor-arg value="${id1}"/>
         <constructor-arg value="${uName1}"/>
         <constructor-arg value="${email1}"/>
@@ -85,7 +85,7 @@
         <constructor-arg value="${bDay2}" type="int"/>
     </bean>
 
-    <bean id="user2" class="com.epam.spring.entity.User">
+    <bean id="user2" class="com.epam.spring.entity.User" autowire="byName">
         <constructor-arg value="${id2}"/>
         <constructor-arg value="${uName2}"/>
         <constructor-arg value="${email2}"/>
@@ -95,61 +95,61 @@
 
     <bean id="userNull" class="com.epam.spring.entity.User"/>
 
-    <bean id="ticket1" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket1" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="1"/>
         <constructor-arg ref="user1"/>
     </bean>
 
-    <bean id="ticket2" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket2" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="2"/>
         <constructor-arg ref="userNull"/>
     </bean>
 
-    <bean id="ticket3" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket3" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="3"/>
         <constructor-arg ref="user1"/>
     </bean>
 
-    <bean id="ticket4" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket4" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="4"/>
         <constructor-arg ref="userNull"/>
     </bean>
 
-    <bean id="ticket5" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket5" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="5"/>
         <constructor-arg ref="user1"/>
     </bean>
 
-    <bean id="ticket6" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket6" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="6"/>
         <constructor-arg ref="userNull"/>
     </bean>
 
-    <bean id="ticket7" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket7" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="7"/>
         <constructor-arg ref="userNull"/>
     </bean>
 
-    <bean id="ticket8" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket8" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="8"/>
         <constructor-arg ref="userNull"/>
     </bean>
 
-    <bean id="ticket9" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket9" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="9"/>
         <constructor-arg ref="userNull"/>
     </bean>
 
-    <bean id="ticket10" class="com.epam.spring.entity.Ticket">
+    <bean id="ticket10" class="com.epam.spring.entity.Ticket" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg value="10"/>
         <constructor-arg ref="userNull"/>

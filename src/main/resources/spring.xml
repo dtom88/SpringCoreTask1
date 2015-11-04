@@ -29,5 +29,6 @@
         </property>
     </bean>
 
+    <bean id="app" class="com.epam.spring.App"/>
 
 </beans>

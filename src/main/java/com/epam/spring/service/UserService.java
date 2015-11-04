@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class UserService {
 
-    @Autowired
     private UserDAO userDAO;
 
     public UserService(UserDAO userDAO) {

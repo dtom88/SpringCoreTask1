@@ -14,9 +14,7 @@ import java.util.List;
  */
 public class AuditoriumService {
 
-    @Autowired
     private AuditoriumDAO auditoriumDAO;
-    @Autowired
     private EventDAO eventDAO;
 
     public AuditoriumService(AuditoriumDAO auditoriumDAO, EventDAO eventDAO) {

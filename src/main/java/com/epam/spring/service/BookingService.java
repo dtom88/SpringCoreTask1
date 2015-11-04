@@ -13,11 +13,8 @@ import java.util.List;
  * Created by Daria_Tomilova on 10/24/2015.
  */
 public class BookingService {
-    @Autowired
     private TicketDAO ticketDAO;
-    @Autowired
     private UserDAO userDAO;
-    @Autowired
     private DiscountService discountService;
 
     public BookingService(TicketDAO ticketDAO, UserDAO userDAO, DiscountService discountService) {

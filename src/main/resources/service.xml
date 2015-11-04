@@ -21,10 +21,6 @@
         <constructor-arg ref="eventDAO"/>
     </bean>
 
-    <bean id="discountService" class="com.epam.spring.service.DiscountService">
-        <constructor-arg ref="discountStrategyDAO"/>
-    </bean>
-
     <bean id="bookingService" class="com.epam.spring.service.BookingService">
         <constructor-arg ref="ticketDAO"/>
         <constructor-arg ref="userDAO"/>

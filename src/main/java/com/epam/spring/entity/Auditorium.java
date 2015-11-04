@@ -65,4 +65,14 @@ public class Auditorium {
     public void setCalendar(List<LocalDate> calendar) {
         this.calendar = calendar;
     }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("id: ").append(id);
+        sb.append("auditorium_name: ").append(name);
+        sb.append("number_of_seats: ").append(numbersOfSeats);
+        sb.append("list_of_vip_seats: ").append(vipSeats.toString());
+        return sb.toString();
+    }
 }
