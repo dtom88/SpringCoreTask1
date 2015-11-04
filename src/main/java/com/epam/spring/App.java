@@ -35,7 +35,11 @@ public class App {
         User user = userService.getUserById(1);
         auditoriumService.assignAuditorium(event, auditoriumService.getAuditoriumByName("Main_hall"));
 
-        System.out.println("");
+        System.out.println("If you would like to know about events type event");
+        System.out.println("If you would like to know about users type user");
+        System.out.println("If you would like to know about auditoriums type auditorium");
+        System.out.println("If you would like to know about tickets type tickets");
+        System.out.println("If you would like to know about discounts type discount");
 
 
         app.dialog();
