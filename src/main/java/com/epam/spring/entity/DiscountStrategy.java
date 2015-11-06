@@ -5,27 +5,35 @@ package com.epam.spring.entity;
  */
 public class DiscountStrategy {
 
-    private Double birthdayStrategy;
-    private Double tenthTiketDiscount;
+    private Double discount;
+    private String name;
 
-    public DiscountStrategy(Double birthdayStrategy, Double tenthTiketDiscount) {
-        this.birthdayStrategy = birthdayStrategy;
-        this.tenthTiketDiscount = tenthTiketDiscount;
+    public DiscountStrategy(Double discount, String name) {
+        this.discount = discount;
+        this.name = name;
     }
 
-    public Double getBirthdayStrategy() {
-        return birthdayStrategy;
+    public Double getDiscount() {
+        return discount;
     }
 
-    public Double getTenthTiketDiscount() {
-        return tenthTiketDiscount;
+    public String getName() {
+        return name;
     }
 
-    public void setBirthdayStrategy(Double birthdayStrategy) {
-        this.birthdayStrategy = birthdayStrategy;
+    public void setDiscount(Double discount) {
+        this.discount = discount;
     }
 
-    public void setTenthTiketDiscount(Double tenthTiketDiscount) {
-        this.tenthTiketDiscount = tenthTiketDiscount;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("discount: ").append(discount);
+        sb.append("name: ").append(name);
+        return sb.toString();
     }
 }

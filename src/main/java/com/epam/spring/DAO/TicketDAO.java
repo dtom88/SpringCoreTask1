@@ -11,27 +11,16 @@ import java.util.*;
  */
 public class TicketDAO {
 
-    @Autowired
     private Ticket ticket1;
-    @Autowired
     private Ticket ticket2;
-    @Autowired
     private Ticket ticket3;
-    @Autowired
     private Ticket ticket4;
-    @Autowired
     private Ticket ticket5;
-    @Autowired
     private Ticket ticket6;
-    @Autowired
     private Ticket ticket7;
-    @Autowired
     private Ticket ticket8;
-    @Autowired
     private Ticket ticket9;
-    @Autowired
     private Ticket ticket10;
-    @Autowired
     private Event event1;
 
     List<Ticket> tickets;

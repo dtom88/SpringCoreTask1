@@ -11,9 +11,7 @@ import java.util.List;
  */
 public class EventDAO {
 
-    @Autowired
     private Event event1;
-    @Autowired
     private Event event2;
 
     private List<Event> events;

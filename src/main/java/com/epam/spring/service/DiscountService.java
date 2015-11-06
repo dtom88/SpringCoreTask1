@@ -1,10 +1,12 @@
 package com.epam.spring.service;
 
 import com.epam.spring.DAO.DiscountStrategyDAO;
+import com.epam.spring.entity.DiscountStrategy;
 import com.epam.spring.entity.Event;
 import com.epam.spring.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -12,7 +14,6 @@ import java.util.Date;
  */
 public class DiscountService {
 
-    @Autowired
     private DiscountStrategyDAO discountStrategyDAO;
 
     public DiscountService(DiscountStrategyDAO discountStrategyDAO) {
@@ -29,13 +30,17 @@ public class DiscountService {
 
     public Double getDiscount(User user, Event event) {
         Double discount = 0.0;
-        if (user.getPaidTickets() % 10 == 9) {
-            discount += discountStrategyDAO.getDiscountStrategy().getTenthTiketDiscount();
-        }
-        if (user.getBirthday().getMonthValue() == event.getDate().getMonthValue()
-                && user.getBirthday().getDayOfMonth() == event.getDate().getDayOfMonth()) {
-            discount += discountStrategyDAO.getDiscountStrategy().getBirthdayStrategy();
+        ArrayList<DiscountStrategy> discounts = discountStrategyDAO.getAll();
+        for (DiscountStrategy ds : discounts) {
+            if (ds.getName().equals("tenthTicketDiscount") && user.getPaidTickets() % 10 == 9) {
+                discount += ds.getDiscount();
+            }
+            if (ds.getName().equals("birthDayDiscount") && user.getBirthday().getMonthValue() == event.getDate().getMonthValue()
+                    && user.getBirthday().getDayOfMonth() == event.getDate().getDayOfMonth()) {
+                discount += ds.getDiscount();
+            }
         }
         return discount;
     }
+
 }

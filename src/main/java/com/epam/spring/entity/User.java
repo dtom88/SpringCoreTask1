@@ -64,4 +64,15 @@ public class User {
     public void setPaidTickets(Integer paidTickets) {
         this.paidTickets = paidTickets;
     }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("id: ").append(id);
+        sb.append("user_name: ").append(name);
+        sb.append("user_email: ").append(email);
+        sb.append("user_b-Day: ").append(birthday.toString());
+        sb.append("number_of_paid_tickets: ").append(paidTickets);
+        return sb.toString();
+    }
 }

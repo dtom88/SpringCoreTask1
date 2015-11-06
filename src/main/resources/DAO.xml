@@ -7,27 +7,23 @@
     <!--<context:annotation-config/>-->
 
     <import resource="entity.xml"/>
+    <import resource="discount.xml"/>
 
-    <bean id="auditoriumDAO" class="com.epam.spring.DAO.AuditoriumDAO">
-        <constructor-arg ref="auditorium1"/>
-        <constructor-arg ref="auditorium2"/>
+    <bean id="auditoriumDAO" class="com.epam.spring.DAO.AuditoriumDAO" autowire="byName">
+        <constructor-arg ref="auditoriums"/>
     </bean>
 
-    <bean id="discountStrategyDAO" class="com.epam.spring.DAO.DiscountStrategyDAO">
-        <constructor-arg ref="discountStrategy"/>
-    </bean>
-
-    <bean id="eventDAO" class="com.epam.spring.DAO.EventDAO">
+    <bean id="eventDAO" class="com.epam.spring.DAO.EventDAO" autowire="byName">
         <constructor-arg ref="event1"/>
         <constructor-arg ref="event2"/>
     </bean>
 
-    <bean id="userDAO" class="com.epam.spring.DAO.UserDAO">
+    <bean id="userDAO" class="com.epam.spring.DAO.UserDAO" autowire="byName">
         <constructor-arg ref="user1"/>
         <constructor-arg ref="user2"/>
     </bean>
 
-    <bean id="ticketDAO" class="com.epam.spring.DAO.TicketDAO">
+    <bean id="ticketDAO" class="com.epam.spring.DAO.TicketDAO" autowire="byName">
         <constructor-arg ref="ticket1"/>
         <constructor-arg ref="ticket2"/>
         <constructor-arg ref="ticket3"/>

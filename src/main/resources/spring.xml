@@ -32,6 +32,7 @@
         </property>
     </bean>
 
+    <bean id="app" class="com.epam.spring.App"/>
 
 
     <!--<util:map id="counter" map-class="java.util.HashMap">-->

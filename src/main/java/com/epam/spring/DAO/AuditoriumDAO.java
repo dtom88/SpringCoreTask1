@@ -13,36 +13,42 @@ import java.util.List;
  */
 public class AuditoriumDAO {
 
-    @Autowired
-    private Auditorium auditorium1;
-    @Autowired
-    private Auditorium auditorium2;
+//    private Auditorium auditorium1;
+//    private Auditorium auditorium2;
 
     private List<Auditorium> auditoriums;
 
-    public AuditoriumDAO(Auditorium auditorium1, Auditorium auditorium2) {
-        auditoriums = new ArrayList<Auditorium>();
-        this.auditorium1 = auditorium1;
-        this.auditorium2 = auditorium2;
-        auditoriums.add(auditorium1);
-        auditoriums.add(auditorium2);
+    public AuditoriumDAO(List<Auditorium> auditoriums) {
+        this.auditoriums = auditoriums;
+//        this.auditorium1 = auditorium1;
+//        this.auditorium2 = auditorium2;
+//        auditoriums.add(auditorium1);
+//        auditoriums.add(auditorium2);
     }
 
-    public Auditorium getAuditorium1() {
-        return auditorium1;
+    public List<Auditorium> getAuditoriums() {
+        return auditoriums;
     }
 
-    public Auditorium getAuditorium2() {
-        return auditorium2;
+    public void setAuditoriums(List<Auditorium> auditoriums) {
+        this.auditoriums = auditoriums;
     }
 
-    public void setAuditorium1(Auditorium auditorium1) {
-        this.auditorium1 = auditorium1;
-    }
-
-    public void setAuditorium2(Auditorium auditorium2) {
-        this.auditorium2 = auditorium2;
-    }
+    //    public Auditorium getAuditorium1() {
+//        return auditorium1;
+//    }
+//
+//    public Auditorium getAuditorium2() {
+//        return auditorium2;
+//    }
+//
+//    public void setAuditorium1(Auditorium auditorium1) {
+//        this.auditorium1 = auditorium1;
+//    }
+//
+//    public void setAuditorium2(Auditorium auditorium2) {
+//        this.auditorium2 = auditorium2;
+//    }
 
     public void add(Auditorium auditorium) {
         auditoriums.add(auditorium);

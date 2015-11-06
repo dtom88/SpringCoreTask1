@@ -81,4 +81,16 @@ public class Event {
     public void setAuditorium(Auditorium auditorium) {
         this.auditorium = auditorium;
     }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("id: ").append(id);
+        sb.append("event_name: ").append(name);
+        sb.append("event_price: ").append(basePrice);
+        sb.append("date: ").append(date.toString());
+        sb.append("time: ").append(time);
+        sb.append("max_event_audience").append(capacity);
+        return sb.toString();
+    }
 }

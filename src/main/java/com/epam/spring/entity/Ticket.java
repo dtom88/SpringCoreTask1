@@ -37,4 +37,12 @@ public class Ticket {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("ticket_event: ").append(event.getName());
+        sb.append("seat_number: ").append(seat);
+        return sb.toString();
+    }
 }

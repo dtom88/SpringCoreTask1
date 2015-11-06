@@ -11,9 +11,7 @@ import java.util.List;
  */
 public class UserDAO {
 
-    @Autowired
     private User user1;
-    @Autowired
     private User user2;
 
     List<User> users;

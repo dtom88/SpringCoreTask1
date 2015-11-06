@@ -13,7 +13,6 @@ import java.util.*;
  */
 public class EventService {
 
-    @Autowired
     private EventDAO eventDAO;
 
     public EventService(EventDAO eventDAO) {
@@ -28,8 +27,9 @@ public class EventService {
         this.eventDAO = eventDAO;
     }
 
-    public void createEvent(Event event) {
-        eventDAO.add(event);
+    public void createEvent(Integer id, String name, LocalDate date, String time, Integer price, Integer capacity) {
+        Event newEvent = new Event(id, name, date, time, price, capacity);
+        eventDAO.add(newEvent);
     }
 
     public void removeEvent(Event event) {

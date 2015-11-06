@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+ 		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+ 		http://www.springframework.org/schema/util
+ 		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+    <!--<import resource="DAO.xml"/>-->
+
+    <bean id="discount1" class="com.epam.spring.entity.DiscountStrategy" autowire="byName">
+        <constructor-arg value="${birthdayDiscount}"/>
+        <constructor-arg value="${discName1}"/>
+    </bean>
+
+    <bean id="discount2" class="com.epam.spring.entity.DiscountStrategy" autowire="byName">
+        <constructor-arg value="${tenthTicketDiscount}"/>
+        <constructor-arg value="${discName2}"/>
+    </bean>
+
+    <util:list id="discountList" list-class="java.util.ArrayList">
+        <ref bean="discount1"/>
+        <ref bean="discount2"/>
+    </util:list>
+
+    <bean id="discountStrategyDAO" class="com.epam.spring.DAO.DiscountStrategyDAO" autowire="byName">
+        <constructor-arg ref="discountList"/>
+    </bean>
+
+    <bean id="discountService" class="com.epam.spring.service.DiscountService" autowire="byName">
+        <constructor-arg ref="discountStrategyDAO"/>
+    </bean>
+
+</beans>
