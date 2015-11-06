@@ -43,6 +43,7 @@
     <aop:config>
         <aop:aspect id="counterAspect" ref="counterBean">
             <aop:after-returning pointcut="execution(com.epam.spring.service.EventService.getEventByName(..)" method="countEventByName"/>
+            <aop:after-returning pointcut="execution(com.epam.spring.entity.Event.getBasePrice(..)" method="countEventPrices"/>
         </aop:aspect>
     </aop:config>
 
