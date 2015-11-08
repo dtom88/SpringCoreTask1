@@ -7,8 +7,6 @@
  		http://www.springframework.org/schema/util
  		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
-    <!--<import resource="DAO.xml"/>-->
-
     <bean id="discount1" class="com.epam.spring.entity.DiscountStrategy" autowire="byName">
         <constructor-arg value="${birthdayDiscount}"/>
         <constructor-arg value="${discName1}"/>

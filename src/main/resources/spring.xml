@@ -10,15 +10,20 @@
  		http://www.springframework.org/schema/util
  		http://www.springframework.org/schema/util/spring-util-4.2.xsd
  		http://www.springframework.org/schema/context
- 		http://www.springframework.org/schema/context/spring-context-4.2.xsd">
-    <context:annotation-config/>
+ 		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+    <!--<context:annotation-config/>-->
     <context:component-scan base-package="com.epam.spring"/>
+
     <aop:aspectj-autoproxy/>
 
 
     <import resource="service.xml"/>
     <import resource="DAO.xml"/>
     <import resource="entity.xml"/>
+    <import resource="discount.xml"/>
 
     <bean class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <property name="locations">
@@ -34,22 +39,29 @@
 
     <bean id="app" class="com.epam.spring.App"/>
 
+    <bean id="counterBean" class="com.epam.spring.aspect.CounterAspect"/>
 
-    <!--<util:map id="counter" map-class="java.util.HashMap">-->
-        <!--<entry key="${evName1}" value="0"/>-->
-        <!--<entry key="${evName2}" value="0"/>-->
-    <!--</util:map>-->
+    <bean id="discountCounterBean" class="com.epam.spring.aspect.DiscountAspect"/>
+
+    <bean id="luckyWinner" class="com.epam.spring.aspect.LuckyWinnerAspect"/>
 
     <aop:config>
-        <aop:aspect id="counterAspect" ref="counterBean">
-            <aop:after-returning pointcut="execution(com.epam.spring.service.EventService.getEventByName(..)" method="countEventByName"/>
-            <aop:after-returning pointcut="execution(com.epam.spring.entity.Event.getBasePrice(..)" method="countEventPrices"/>
+        <!--<aop:aspect id="counterAspect" ref="counterBean">-->
+            <!--<aop:after-returning method="com.epam.spring.aspect.CounterAspect.countEventByName"-->
+                                 <!--pointcut="execution(com.epam.spring.service.EventService.getEventByName(..))" returning="retVal"/>-->
+            <!--<aop:after-returning method="com.epam.spring.aspect.CounterAspect.countEventPrices"-->
+                                 <!--pointcut="execution(* *.getBasePrice(..))" returning="retVal"/>-->
+            <!--<aop:after-returning method="com.epam.spring.aspect.CounterAspect.countTicketsBooking"-->
+                                 <!--pointcut="execution(* *.bookTicket(..))" returning="retVal"/>-->
+        <!--</aop:aspect>-->
+        <aop:aspect id="discountAspect" ref="discountCounterBean">
+            <aop:after-returning method="com.epam.spring.aspect.DiscountAspect.countGetDiscount"
+                                 pointcut="execution(* *.getDiscount() &amp;&amp; args(user)"/>
         </aop:aspect>
+        <!--<aop:aspect id="luckyAspect" ref="luckyWinner">-->
+            <!--<aop:before method="com.epam.spring.aspect.LuckyWinnerAspect.checkLuckyUser"-->
+                        <!--pointcut="execution(com.epam.spring.service.BookingService.getTicketPrice(..)) &amp;&amp; args(event, user)"/>-->
+        <!--</aop:aspect>-->
     </aop:config>
-
-    <bean id="counterBean" class="com.epam.spring.aspect.CounterAspect"/>
-        <!--<property name="counter" ref="counter"/>-->
-    <!--</bean>-->
-
 
 </beans>

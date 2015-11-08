@@ -1,6 +1,8 @@
 package com.epam.spring.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Daria_Tomilova on 10/23/2015.
@@ -12,6 +14,7 @@ public class User {
     private String email;
     private LocalDate birthday;
     private Integer paidTickets;
+    private List<Event> luckyEvents = new ArrayList<Event>();
 
     public User() {
 
@@ -43,6 +46,14 @@ public class User {
 
     public int getPaidTickets() {
         return paidTickets;
+    }
+
+    public List<Event> getLuckyEvents() {
+        return luckyEvents;
+    }
+
+    public void setLuckyEvents(List<Event> luckyEvents) {
+        this.luckyEvents = luckyEvents;
     }
 
     public void setName(String name) {

@@ -1,6 +1,7 @@
 package com.epam.spring.aspect;
 
 import com.epam.spring.entity.Event;
+import com.epam.spring.entity.Ticket;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,12 +40,26 @@ public class CounterAspect {
     }
 
     public void countTicketsBooking(Object retVal) {
-        if (retVal != null) {
-            if (!bookingCounter.containsKey(retVal)) {
-                bookingCounter.put((Event) retVal, 1);
+        if(retVal != null) {
+            Ticket tic = (Ticket) retVal;
+            if (!bookingCounter.containsKey(tic.getEvent())) {
+                bookingCounter.put(tic.getEvent(), 1);
             }
-            bookingCounter.put((Event) retVal, accessByNameCounter.get(retVal) + 1);
+            bookingCounter.put(tic.getEvent(), accessByNameCounter.get(tic.getEvent()) + 1);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        for (Event event : accessByNameCounter.keySet()) {
+            sb.append(event.getName()).append(" was searched by name ").append(accessByNameCounter.get(event)).append(" times, ");
+            if (queryOfPriceCounter.containsKey(event))
+            sb.append("this event prise was quaried ").append(queryOfPriceCounter.get(event)).append(" times, ");
+            if (bookingCounter.containsKey(event))
+            sb.append("this event tickets were booked ").append(bookingCounter.get(event)).append(" times.");
+        }
+        return sb.toString();
     }
 
 

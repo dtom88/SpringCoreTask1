@@ -17,12 +17,22 @@ public class DiscountAspect {
         totalCounter = 0;
     }
 
-    public void countGetDiscounts(User user) {
+    public void countGetDiscounts(Object user) {
         totalCounter += 1;
         if (!userDiscountCounter.containsKey(user)) {
-            userDiscountCounter.put(user, 1);
+            userDiscountCounter.put((User) user, 1);
         } else {
-            userDiscountCounter.put(user, userDiscountCounter.get(user) + 1);
+            userDiscountCounter.put((User) user, userDiscountCounter.get(user) + 1);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer sb = new StringBuffer();
+        for (User user : userDiscountCounter.keySet()) {
+            sb.append(user.getName()).append("'s discount was asked ").append(userDiscountCounter.get(user)).append(" times; ");
+        }
+        sb.append("Discounts were asked ").append(totalCounter).append(" times.");
+        return sb.toString();
     }
 }

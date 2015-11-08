@@ -11,7 +11,8 @@
  		http://www.springframework.org/schema/context
  		http://www.springframework.org/schema/context/spring-context-4.2.xsd">
     <import resource="DAO.xml"/>
-    <import resource="entity.xml"/>
+    <import resource="discount.xml"/>
+    <!--<import resource="entity.xml"/>-->
 
     <bean id="userService" class="com.epam.spring.service.UserService">
         <constructor-arg ref="userDAO"/>

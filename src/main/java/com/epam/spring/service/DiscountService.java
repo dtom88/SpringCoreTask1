@@ -15,6 +15,7 @@ import java.util.Date;
 public class DiscountService {
 
     private DiscountStrategyDAO discountStrategyDAO;
+    private UserService userService;
 
     public DiscountService(DiscountStrategyDAO discountStrategyDAO) {
         this.discountStrategyDAO = discountStrategyDAO;
@@ -31,6 +32,11 @@ public class DiscountService {
     public Double getDiscount(User user, Event event) {
         Double discount = 0.0;
         ArrayList<DiscountStrategy> discounts = discountStrategyDAO.getAll();
+
+        if (user.getLuckyEvents().contains(event)) {
+            return 1.0;
+        }
+
         for (DiscountStrategy ds : discounts) {
             if (ds.getName().equals("tenthTicketDiscount") && user.getPaidTickets() % 10 == 9) {
                 discount += ds.getDiscount();

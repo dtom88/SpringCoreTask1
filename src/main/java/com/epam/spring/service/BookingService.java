@@ -54,12 +54,15 @@ public class BookingService {
         return price;
     }
 
-    public void bookTicket(User user, Ticket ticket) {
-        List<Ticket> tickets = ticketDAO.getAll(ticket.getEvent());
-        tickets.get(tickets.indexOf(ticket)).setUser(user);
-        ticketDAO.update(ticket);
-        user.setPaidTickets(user.getPaidTickets() + 1);
-        userDAO.update(user);
+    public Ticket bookTicket(User user, Ticket ticket) {
+        if (ticket.getUser() == null) {
+            List<Ticket> tickets = ticketDAO.getAll(ticket.getEvent());
+            tickets.get(tickets.indexOf(ticket)).setUser(user);
+            ticketDAO.update(ticket);
+            user.setPaidTickets(user.getPaidTickets() + 1);
+            userDAO.update(user);
+            return ticket;
+        } else return null;
     }
 
     public List<Ticket> getTiketsForEvent(Event event) {
