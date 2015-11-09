@@ -26,7 +26,7 @@
         <constructor-arg ref="discountList"/>
     </bean>
 
-    <bean id="discountService" class="com.epam.spring.service.DiscountService" autowire="byName">
+    <bean id="discountService" class="com.epam.spring.service.DiscountService">
         <constructor-arg ref="discountStrategyDAO"/>
     </bean>
 

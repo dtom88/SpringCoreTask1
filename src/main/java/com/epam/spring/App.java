@@ -1,5 +1,8 @@
 package com.epam.spring;
 
+import com.epam.spring.aspect.CounterAspect;
+import com.epam.spring.aspect.DiscountAspect;
+import com.epam.spring.aspect.LuckyWinnerAspect;
 import com.epam.spring.entity.Event;
 import com.epam.spring.entity.User;
 import com.epam.spring.service.*;
@@ -21,8 +24,9 @@ public class App {
 
         ConfigurableApplicationContext appContext = new ClassPathXmlApplicationContext("spring.xml");
 
-        app = (App) appContext.getBean("app");
-//        CounterAspect cAsp = (CounterAspect) appContext.getBean("counterBean");
+//        app = (App) appContext.getBean("app");
+        CounterAspect cAsp = (CounterAspect) appContext.getBean("counterBean");
+        DiscountAspect discAsp = (DiscountAspect) appContext.getBean("discountCounterBean");
 
         AuditoriumService auditoriumService = (AuditoriumService) appContext.getBean("auditoriumService");
         BookingService bookingService = (BookingService) appContext.getBean("bookingService");
@@ -34,14 +38,6 @@ public class App {
         User user = userService.getUserById(1);
         auditoriumService.assignAuditorium(event, auditoriumService.getAuditoriumByName("Main_hall"));
 
-        System.out.println("If you would like to know about events type event");
-        System.out.println("If you would like to know about users type user");
-        System.out.println("If you would like to know about auditoriums type auditorium");
-        System.out.println("If you would like to know about tickets type tickets");
-        System.out.println("If you would like to know about discounts type discount");
-
-
-//        app.dialog();
         System.out.println("One of auditorium is " + event.getAuditorium().getName());
         System.out.println("There are " + auditoriumService.getVipSeats("Class_with_balcony").size() + " VIP seats in the class with balcony");
         System.out.println("There are " + auditoriumService.getSeatsNumber("Main_hall") + " seats in the main hall");
@@ -68,39 +64,11 @@ public class App {
         bookingService.bookTicket(user, bookingService.getTiketsForEvent(event).get(5));
         System.out.println(bookingService.getTiketsForEvent(event).get(5).getUser().getName() + " booked the concert ticket");
 
-//        System.out.println(cAsp);
+
+        System.out.println();
+        System.out.println(cAsp);
+        System.out.println(discAsp);
     }
-
-    private void dialog() {
-        String str = new String();
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            str = br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (str.equals("event")) {
-            System.out.println("eve");
-        }
-        if (str.equals("ticket")) {
-            System.out.println("tic");
-        }
-        if (str.equals("discount")) {
-            System.out.println("discount");
-        }
-        if (str.equals("user")) {
-            System.out.println("user");
-        }
-        if (str.equals("auditorium")) {
-            System.out.println("aud");
-        } else {
-            return;
-        }
-        dialog();
-    }
-
 
     }
 

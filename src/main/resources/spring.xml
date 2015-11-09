@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
-    <!--<context:annotation-config/>-->
+    <context:annotation-config/>
     <context:component-scan base-package="com.epam.spring"/>
 
     <aop:aspectj-autoproxy/>
@@ -45,7 +45,7 @@
 
     <bean id="luckyWinner" class="com.epam.spring.aspect.LuckyWinnerAspect"/>
 
-    <aop:config>
+    <!--<aop:config>-->
         <!--<aop:aspect id="counterAspect" ref="counterBean">-->
             <!--<aop:after-returning method="com.epam.spring.aspect.CounterAspect.countEventByName"-->
                                  <!--pointcut="execution(com.epam.spring.service.EventService.getEventByName(..))" returning="retVal"/>-->
@@ -54,14 +54,14 @@
             <!--<aop:after-returning method="com.epam.spring.aspect.CounterAspect.countTicketsBooking"-->
                                  <!--pointcut="execution(* *.bookTicket(..))" returning="retVal"/>-->
         <!--</aop:aspect>-->
-        <aop:aspect id="discountAspect" ref="discountCounterBean">
-            <aop:after-returning method="com.epam.spring.aspect.DiscountAspect.countGetDiscount"
-                                 pointcut="execution(* *.getDiscount() &amp;&amp; args(user)"/>
-        </aop:aspect>
+        <!--<aop:aspect id="discountAspect" ref="discountCounterBean">-->
+            <!--<aop:after-returning method="com.epam.spring.aspect.DiscountAspect.countGetDiscount"-->
+                                 <!--pointcut="execution(Double com.epam.spring.service.DiscountService.getDiscount(..) &amp;&amp; args(user,..)"/>-->
+        <!--</aop:aspect>-->
         <!--<aop:aspect id="luckyAspect" ref="luckyWinner">-->
             <!--<aop:before method="com.epam.spring.aspect.LuckyWinnerAspect.checkLuckyUser"-->
                         <!--pointcut="execution(com.epam.spring.service.BookingService.getTicketPrice(..)) &amp;&amp; args(event, user)"/>-->
         <!--</aop:aspect>-->
-    </aop:config>
+    <!--</aop:config>-->
 
 </beans>
