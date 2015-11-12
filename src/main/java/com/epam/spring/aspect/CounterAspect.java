@@ -2,6 +2,7 @@ package com.epam.spring.aspect;
 
 import com.epam.spring.entity.Event;
 import com.epam.spring.entity.Ticket;
+import com.epam.spring.entity.User;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 
@@ -25,33 +26,32 @@ public class CounterAspect {
     }
 
     @AfterReturning(pointcut="execution(* com.epam.spring.service.EventService.getEventByName(..))",  returning="retVal")
-    public void countEventByName(Object retVal) {
+    public void countEventByName(Event retVal) {
         if (retVal != null) {
             if (!accessByNameCounter.containsKey(retVal)) {
-                accessByNameCounter.put((Event) retVal, 1);
+                accessByNameCounter.put(retVal, 1);
             }
-            accessByNameCounter.put((Event) retVal, accessByNameCounter.get(retVal) + 1);
+            accessByNameCounter.put(retVal, accessByNameCounter.get(retVal) + 1);
         }
     }
 
     @AfterReturning(pointcut = "execution(* com.epam.spring.service.BookingService.getTicketPrice(..)) &&args(event,..)")
-    public void countEventPrices(Object event) {
+    public void countEventPrices(Event event) {
         if (event != null) {
             if (!queryOfPriceCounter.containsKey(event)) {
-                queryOfPriceCounter.put((Event) event, 1);
+                queryOfPriceCounter.put(event, 1);
             }
-            queryOfPriceCounter.put((Event) event, accessByNameCounter.get(event) + 1);
+            queryOfPriceCounter.put(event, accessByNameCounter.get(event) + 1);
         }
     }
 
     @AfterReturning(pointcut = "execution(* com.epam.spring.service.BookingService.bookTicket(..)) && args(user, ticket)")
-    public void countTicketsBooking(Object user, Object ticket) {
+    public void countTicketsBooking(User user, Ticket ticket) {
         if(ticket != null) {
-            Ticket tic = (Ticket) ticket;
-            if (!bookingCounter.containsKey(tic.getEvent())) {
-                bookingCounter.put(tic.getEvent(), 1);
+            if (!bookingCounter.containsKey(ticket.getEvent())) {
+                bookingCounter.put(ticket.getEvent(), 1);
             }
-            bookingCounter.put(tic.getEvent(), accessByNameCounter.get(tic.getEvent()) + 1);
+            bookingCounter.put(ticket.getEvent(), accessByNameCounter.get(ticket.getEvent()) + 1);
         }
     }
 

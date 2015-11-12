@@ -24,12 +24,11 @@ public class LuckyWinnerAspect {
     }
 
     @Before("execution(* com.epam.spring.service.BookingService.getTicketPrice(..)) && args(event, seat, user)")
-    public void checkLuckyUser(Object event, Object seat, Object user) {
-        if (isUserLucky((User) user)) {
-            User us = (User) user;
-            List<Event> events = us.getLuckyEvents();
-            events.add((Event) event);
-            us.setLuckyEvents(events);
+    public void checkLuckyUser(Event event, Integer seat, User user) {
+        if (isUserLucky(user)) {
+            List<Event> events = user.getLuckyEvents();
+            events.add(event);
+            user.setLuckyEvents(events);
             System.out.println("!!!for user " + ((User) user).getName() + " " + ((Event) event).getName() + " is lucky event");
         } else {
             System.out.println("!!!this user is loser!");

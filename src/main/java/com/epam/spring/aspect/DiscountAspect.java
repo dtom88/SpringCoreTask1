@@ -21,12 +21,12 @@ public class DiscountAspect {
     }
 
     @After("execution(Double com.epam.spring.service.DiscountService.getDiscount(..)) && args(user,..))")
-    public void countGetDiscounts(Object user) {
+    public void countGetDiscounts(User user) {
         totalCounter += 1;
         if (!userDiscountCounter.containsKey(user)) {
-            userDiscountCounter.put((User) user, 1);
+            userDiscountCounter.put(user, 1);
         } else {
-            userDiscountCounter.put((User) user, userDiscountCounter.get(user) + 1);
+            userDiscountCounter.put(user, userDiscountCounter.get(user) + 1);
         }
     }
 
