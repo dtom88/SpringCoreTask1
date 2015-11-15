@@ -7,12 +7,12 @@
  		http://www.springframework.org/schema/util
  		http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
-    <bean id="discount1" class="com.epam.spring.entity.DiscountStrategy" autowire="byName">
+    <bean id="discount1" class="com.epam.spring.entity.DiscountStrategy">
         <constructor-arg value="${birthdayDiscount}"/>
         <constructor-arg value="${discName1}"/>
     </bean>
 
-    <bean id="discount2" class="com.epam.spring.entity.DiscountStrategy" autowire="byName">
+    <bean id="discount2" class="com.epam.spring.entity.DiscountStrategy">
         <constructor-arg value="${tenthTicketDiscount}"/>
         <constructor-arg value="${discName2}"/>
     </bean>
@@ -22,7 +22,7 @@
         <ref bean="discount2"/>
     </util:list>
 
-    <bean id="discountStrategyDAO" class="com.epam.spring.DAO.DiscountStrategyDAO" autowire="byName">
+    <bean id="discountStrategyDAO" class="com.epam.spring.DAO.DiscountStrategyDAO">
         <constructor-arg ref="discountList"/>
     </bean>
 

@@ -45,16 +45,12 @@
             <artifactId>spring-aop</artifactId>
             <version>${spring.ver}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.aspectj</groupId>-->
-            <!--<artifactId>aspectjtools</artifactId>-->
-            <!--<version>${aspectj.ver}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>cglib</groupId>-->
-            <!--<artifactId>cglib</artifactId>-->
-            <!--<version>2.2</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4-1200-jdbc41</version>
+        </dependency>
+
     </dependencies>
 
     <groupId>com.epam.spring</groupId>

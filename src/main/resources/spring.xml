@@ -22,13 +22,13 @@
 
     <import resource="service.xml"/>
     <import resource="DAO.xml"/>
-    <import resource="entity.xml"/>
     <import resource="discount.xml"/>
 
     <bean class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:entity.properties</value>
+                <value>classpath:discount.properties</value>
+                <value>classpath:jdbc.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true"/>
@@ -39,11 +39,26 @@
 
     <bean id="app" class="com.epam.spring.App"/>
 
-    <bean id="counterBean" class="com.epam.spring.aspect.CounterAspect"/>
+    <bean id="counterBean" class="com.epam.spring.aspect.CounterAspect">
+        <constructor-arg ref="counterAspectDAO"/>
+    </bean>
 
-    <bean id="discountCounterBean" class="com.epam.spring.aspect.DiscountAspect"/>
+    <bean id="discountCounterBean" class="com.epam.spring.aspect.DiscountAspect">
+        <constructor-arg ref="discountAspectDAO"/>
+    </bean>
 
     <bean id="luckyWinner" class="com.epam.spring.aspect.LuckyWinnerAspect"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
 
     <!--<aop:config>-->
         <!--<aop:aspect id="counterAspect" ref="counterBean">-->
@@ -56,11 +71,11 @@
         <!--</aop:aspect>-->
         <!--<aop:aspect id="discountAspect" ref="discountCounterBean">-->
             <!--<aop:after-returning method="com.epam.spring.aspect.DiscountAspect.countGetDiscount"-->
-                                 <!--pointcut="execution(Double com.epam.spring.service.DiscountService.getDiscount(..) &amp;&amp; args(user,..)"/>-->
+                                 <!--pointcut="execution(Double com.epam.spring.service.DiscountService.getDiscount(..) &amp;&amp; args(userId,..)"/>-->
         <!--</aop:aspect>-->
         <!--<aop:aspect id="luckyAspect" ref="luckyWinner">-->
             <!--<aop:before method="com.epam.spring.aspect.LuckyWinnerAspect.checkLuckyUser"-->
-                        <!--pointcut="execution(com.epam.spring.service.BookingService.getTicketPrice(..)) &amp;&amp; args(event, user)"/>-->
+                        <!--pointcut="execution(com.epam.spring.service.BookingService.getTicketPrice(..)) &amp;&amp; args(eventId, userId)"/>-->
         <!--</aop:aspect>-->
     <!--</aop:config>-->
 

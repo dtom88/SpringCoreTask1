@@ -1,9 +1,12 @@
 package com.epam.spring.DAO;
 
 import com.epam.spring.entity.Event;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
-import java.util.ArrayList;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,53 +14,63 @@ import java.util.List;
  */
 public class EventDAO {
 
-    private Event event1;
-    private Event event2;
+    private JdbcTemplate jdbcTemplate;
 
-    private List<Event> events;
-
-    public EventDAO(Event event1, Event event2) {
-        events = new ArrayList<Event>();
-        this.event1 = event1;
-        this.event2 = event2;
-        events.add(event1);
-        events.add(event2);
+    public EventDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Event getEvent1() {
-        return event1;
-    }
-
-    public Event getEvent2() {
-        return event2;
-    }
-
-    public void setEvent1(Event event1) {
-        this.event1 = event1;
-    }
-
-    public void setEvent2(Event event2) {
-        this.event2 = event2;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public void add(Event event) {
-        events.add(event);
+        jdbcTemplate.update("insert into events (name, date, price, capacity, auditoriumid) values (?, ?, ?, ?, ?)",
+                event.getName(), event.getDate(), event.getBasePrice(), event.getCapacity(), event.getAuditoriumId());
     }
 
     public void remove(Event event) {
-        events.remove(event);
+        jdbcTemplate.update("update events set isdeleted = '1' where id = ?", event.getId());
     }
 
     public List<Event> getAll() {
-        return events;
+        return jdbcTemplate.query("select * from events", new RowMapper<Event>() {
+            public Event mapRow(ResultSet resultSet, int i) throws SQLException {
+                Integer id = resultSet.getInt("Id");
+                String name = resultSet.getString("Name");
+                Date date = resultSet.getDate("Date");
+                Integer price = resultSet.getInt("Price");
+                Integer capacity = resultSet.getInt("Capacity");
+                Integer auditoriumId = resultSet.getInt("AuditoriumId");
+                Event event = new Event(id, name, date, price, capacity, auditoriumId);
+                return event;
+            }
+        });
+    }
+
+    public Event getEventById(Integer id) {
+        return jdbcTemplate.queryForObject("select * from events where id = ?", new Object[]{id},
+                new RowMapper<Event>() {
+                    public Event mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Integer id = resultSet.getInt("Id");
+                        String name = resultSet.getString("Name");
+                        Date date = resultSet.getDate("Date");
+                        Integer price = resultSet.getInt("Price");
+                        Integer capacity = resultSet.getInt("Capacity");
+                        Integer auditoriumId = resultSet.getInt("AuditoriumId");
+                        Event event = new Event(id, name, date, price, capacity, auditoriumId);
+                        return event;
+                    }
+                });
     }
 
     public void update(Event event) {
-        events.get(event.getId() - 1).setName(event.getName());
-        events.get(event.getId() - 1).setDate(event.getDate());
-        events.get(event.getId() - 1).setBasePrice(event.getBasePrice());
-        events.get(event.getId() - 1).setTime(event.getTime());
-        events.get(event.getId() - 1).setCapacity(event.getCapacity());
+        Integer id = event.getId();
+        jdbcTemplate.update("update events set name = ? where id = ?", event.getName(), id);
+        jdbcTemplate.update("update events set date = ? where id = ?", event.getDate(), id);
+        jdbcTemplate.update("update events set price = ? where id = ?", event.getBasePrice(), id);
+        jdbcTemplate.update("update events set capacity = ? where id = ?", event.getCapacity(), id);
+        jdbcTemplate.update("update events set auditoriumid = ? where id = ?", event.getAuditoriumId(), id);
     }
 
 }

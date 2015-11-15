@@ -1,7 +1,7 @@
 package com.epam.spring.entity;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,15 +12,19 @@ public class Auditorium {
     private Integer id;
     private String name;
     private Integer numbersOfSeats;
-    private List<Integer> vipSeats;
-    private List<LocalDate> calendar;
+    private List<Date> calendar;
 
-    public Auditorium(Integer id, String name, Integer numbersOfSeats, List<Integer> vipSeats) {
+    public Auditorium(Integer id, String name, Integer numbersOfSeats) {
         this.id = id;
         this.name = name;
         this.numbersOfSeats = numbersOfSeats;
-        this.vipSeats = vipSeats;
-        calendar = new ArrayList<LocalDate>();
+        calendar = new ArrayList<Date>();
+    }
+
+    public Auditorium(String name, Integer numbersOfSeats, List<Date> calendar) {
+        this.name = name;
+        this.numbersOfSeats = numbersOfSeats;
+        this.calendar = calendar;
     }
 
     public Auditorium() {
@@ -34,11 +38,7 @@ public class Auditorium {
         return numbersOfSeats;
     }
 
-    public List<Integer> getVipSeats() {
-        return vipSeats;
-    }
-
-    public List<LocalDate> getCalendar() {
+    public List<Date> getCalendar() {
         return calendar;
     }
 
@@ -50,10 +50,6 @@ public class Auditorium {
         this.numbersOfSeats = numbersOfSeats;
     }
 
-    public void setVipSeats(List<Integer> vipSeats) {
-        this.vipSeats = vipSeats;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -62,17 +58,16 @@ public class Auditorium {
         this.id = id;
     }
 
-    public void setCalendar(List<LocalDate> calendar) {
+    public void setCalendar(List<Date> calendar) {
         this.calendar = calendar;
     }
 
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("id: ").append(id);
-        sb.append("auditorium_name: ").append(name);
+        sb.append("id: ").append(id).append("\t");
+        sb.append("auditorium_name: ").append(name).append("\t");
         sb.append("number_of_seats: ").append(numbersOfSeats);
-        sb.append("list_of_vip_seats: ").append(vipSeats.toString());
         return sb.toString();
     }
 }

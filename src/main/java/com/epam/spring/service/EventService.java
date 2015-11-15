@@ -19,16 +19,12 @@ public class EventService {
         this.eventDAO = eventDAO;
     }
 
-    public EventDAO getEventDAO() {
-        return eventDAO;
-    }
-
     public void setEventDAO(EventDAO eventDAO) {
         this.eventDAO = eventDAO;
     }
 
-    public void createEvent(Integer id, String name, LocalDate date, String time, Integer price, Integer capacity) {
-        Event newEvent = new Event(id, name, date, time, price, capacity);
+    public void createEvent(String name, Date date, Integer price, Integer capacity) {
+        Event newEvent = new Event(name, date, price, capacity);
         eventDAO.add(newEvent);
     }
 
@@ -50,24 +46,28 @@ public class EventService {
        return  eventDAO.getAll();
     }
 
-    public Collection<Event> getForDateRange(LocalDate from, LocalDate to) {
+    public Collection<Event> getForDateRange(Date from, Date to) {
         List<Event> events = eventDAO.getAll();
         for(Event event : events) {
-            if(event.getDate().isAfter(to) && event.getDate().isBefore(from)) {
+            if(event.getDate().before(from) && event.getDate().after(to)) {
                 events.remove(event);
             }
         }
         return  events;
     }
 
-    public List<Event> getNextEvents(LocalDate to) {
+    public List<Event> getNextEvents(Date to) {
         List<Event> events = eventDAO.getAll();
         for(Event event : events) {
-            if(event.getDate().isBefore(to)) {
+            if(event.getDate().before(to)) {
                events.remove(event);
             }
         }
         return events;
+    }
+
+    public Event getEventById(Integer id) {
+       return eventDAO.getEventById(id);
     }
 
 }

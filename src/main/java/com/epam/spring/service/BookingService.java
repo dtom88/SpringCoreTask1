@@ -1,11 +1,11 @@
 package com.epam.spring.service;
 
+import com.epam.spring.DAO.EventDAO;
 import com.epam.spring.DAO.TicketDAO;
 import com.epam.spring.DAO.UserDAO;
 import com.epam.spring.entity.Event;
 import com.epam.spring.entity.Ticket;
 import com.epam.spring.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -15,24 +15,13 @@ import java.util.List;
 public class BookingService {
     private TicketDAO ticketDAO;
     private UserDAO userDAO;
+    private EventDAO eventDAO;
     private DiscountService discountService;
 
     public BookingService(TicketDAO ticketDAO, UserDAO userDAO, DiscountService discountService) {
         this.ticketDAO = ticketDAO;
         this.userDAO = userDAO;
         this.discountService = discountService;
-    }
-
-    public TicketDAO getTicketDAO() {
-        return ticketDAO;
-    }
-
-    public UserDAO getUserDAO() {
-        return userDAO;
-    }
-
-    public DiscountService getDiscountService() {
-        return discountService;
     }
 
     public void setTicketDAO(TicketDAO ticketDAO) {
@@ -47,24 +36,28 @@ public class BookingService {
         this.discountService = discountService;
     }
 
-    public Double getTicketPrice(Event event, Integer seat, User user) {
-        List<Ticket> tickets =  ticketDAO.getAll(event);
-        Double price = Double.valueOf(tickets.get(seat - 1).getEvent().getBasePrice());
-        price *= (1 - discountService.getDiscount(user, event));
-        return price;
+    public void setEventDAO(EventDAO eventDAO) {
+        this.eventDAO = eventDAO;
+    }
+
+    public List<Ticket> getTicketsForEvent(Event event) {
+        return ticketDAO.getAll(event);
+    }
+
+    public Double getTicketPrice(Event event, User user) {
+        Integer price = event.getBasePrice();
+        return price*(1 - discountService.getDiscount(user, event));
     }
 
     public void bookTicket(User user, Ticket ticket) {
-        if (ticket.getUser() == null) {
-            List<Ticket> tickets = ticketDAO.getAll(ticket.getEvent());
-            tickets.get(tickets.indexOf(ticket)).setUser(user);
+        if (ticket.getUserId() == null) {
+            ticket.setIsSold(true);
+            ticket.setUserId(user.getId());
+            ticket.setSellPrice(getTicketPrice(eventDAO.getEventById(ticket.getEventId()), user));
             ticketDAO.update(ticket);
             user.setPaidTickets(user.getPaidTickets() + 1);
             userDAO.update(user);
         }
     }
 
-    public List<Ticket> getTiketsForEvent(Event event) {
-        return ticketDAO.getAll(event);
-    }
 }

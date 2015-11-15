@@ -1,7 +1,7 @@
 package com.epam.spring.entity;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,18 +12,21 @@ public class User {
     private Integer id;
     private String name;
     private String email;
-    private LocalDate birthday;
+    private Date birthday;
     private Integer paidTickets;
     private List<Event> luckyEvents = new ArrayList<Event>();
 
-    public User() {
-
-    }
-
-    public User(Integer id, String name, String email, LocalDate birthday, Integer paidTickets) {
+    public User(Integer id, String name, String email, Date birthday, Integer paidTickets) {
         this.name = name;
         this.email = email;
         this.id = id;
+        this.birthday = birthday;
+        this.paidTickets = paidTickets;
+    }
+
+    public User(String name, String email, Date birthday, Integer paidTickets) {
+        this.name = name;
+        this.email = email;
         this.birthday = birthday;
         this.paidTickets = paidTickets;
     }
@@ -40,11 +43,11 @@ public class User {
         return id;
     }
 
-    public LocalDate getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public int getPaidTickets() {
+    public Integer getPaidTickets() {
         return paidTickets;
     }
 
@@ -68,7 +71,7 @@ public class User {
         this.id = id;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
 
@@ -79,10 +82,10 @@ public class User {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
-        sb.append("id: ").append(id);
-        sb.append("user_name: ").append(name);
-        sb.append("user_email: ").append(email);
-        sb.append("user_b-Day: ").append(birthday.toString());
+        sb.append("id: ").append(id).append("\t");
+        sb.append("user_name: ").append(name).append("\t");
+        sb.append("user_email: ").append(email).append("\t");
+        sb.append("user_b-Day: ").append(birthday.toString()).append("\t");
         sb.append("number_of_paid_tickets: ").append(paidTickets);
         return sb.toString();
     }

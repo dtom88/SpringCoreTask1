@@ -1,9 +1,17 @@
 package com.epam.spring.aspect;
 
+import com.epam.spring.aspectDAO.DiscountAspectDAO;
+import com.epam.spring.entity.DiscountLog;
+import com.epam.spring.entity.DiscountStrategy;
+import com.epam.spring.entity.Event;
 import com.epam.spring.entity.User;
+import com.epam.spring.service.DiscountService;
+import com.epam.spring.service.UserService;
 import org.aspectj.lang.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,32 +20,53 @@ import java.util.Map;
 @Aspect
 public class DiscountAspect {
 
-    private Map<User, Integer> userDiscountCounter;
-    private Integer totalCounter;
+    private DiscountAspectDAO discountAspectDAO;
 
-    public DiscountAspect() {
-        userDiscountCounter = new HashMap<User, Integer>();
-        totalCounter = 0;
+
+    public DiscountAspect(DiscountAspectDAO discountAspectDAO) {
+        this.discountAspectDAO = discountAspectDAO;
     }
 
-    @After("execution(Double com.epam.spring.service.DiscountService.getDiscount(..)) && args(user,..))")
-    public void countGetDiscounts(User user) {
-        totalCounter += 1;
-        if (!userDiscountCounter.containsKey(user)) {
-            userDiscountCounter.put(user, 1);
-        } else {
-            userDiscountCounter.put(user, userDiscountCounter.get(user) + 1);
+//    @After("execution(Double com.epam.spring.service.DiscountService.getDiscount(..)) && args(user,..))")
+//    public void countGetDiscounts(User user) {
+//        DiscountLog discountLog = new DiscountLog(user.getId(),"", )
+//       discountAspectDAO.add();
+//    }
+//
+//    @Override
+//    public String toString() {
+//        StringBuffer sb = new StringBuffer();
+//        for (User user : userDiscountCounter.keySet()) {
+//            sb.append(user.getName()).append("'s discount was asked ").append(userDiscountCounter.get(user)).append(" times; ");
+//            sb.append("\n");
+//        }
+//        sb.append("Discounts were asked ").append(totalCounter).append(" times.");
+//        return sb.toString();
+//    }
+
+    @AfterReturning(pointcut = "execution(* com.epam.spring.service.DiscountService.isBirthdayDiscount(..)) && args(ds, user,..)",
+            returning="retVal")
+    public void countBirthdayDiscount(Boolean retVal, DiscountStrategy ds, User user) {
+        if (retVal) {
+            if (!discountAspectDAO.getAllUserId().contains(user.getId()) ||
+                    !discountAspectDAO.getAllDiscountsName().contains(ds.getName())) {
+                discountAspectDAO.add(new DiscountLog(user.getId(), ds.getName(), 1));
+            } else {
+                discountAspectDAO.update(ds.getName(), user.getId());
+            }
         }
     }
 
-    @Override
-    public String toString() {
-        StringBuffer sb = new StringBuffer();
-        for (User user : userDiscountCounter.keySet()) {
-            sb.append(user.getName()).append("'s discount was asked ").append(userDiscountCounter.get(user)).append(" times; ");
-            sb.append("\n");
+    @AfterReturning(pointcut = "execution(* com.epam.spring.service.DiscountService.isTenthTicketDiscount(..)) && args(ds, user)",
+            returning = "retVal")
+    public void countTenthTicketDiscount(Boolean retVal, DiscountStrategy ds, User user) {
+        if (retVal) {
+            if (!discountAspectDAO.getAllUserId().contains(user.getId()) ||
+                    !discountAspectDAO.getAllDiscountsName().contains(ds.getName())) {
+                discountAspectDAO.add(new DiscountLog(user.getId(), ds.getName(), 1));
+            } else {
+                discountAspectDAO.update(ds.getName(), user.getId());
+            }
         }
-        sb.append("Discounts were asked ").append(totalCounter).append(" times.");
-        return sb.toString();
     }
 }

@@ -32,8 +32,8 @@ public class DiscountStrategy {
     @Override
     public String toString() {
         StringBuffer sb = new StringBuffer();
+        sb.append("name: ").append(name).append("\t");
         sb.append("discount: ").append(discount);
-        sb.append("name: ").append(name);
         return sb.toString();
     }
 }

@@ -1,72 +1,73 @@
 package com.epam.spring.aspect;
 
+import com.epam.spring.aspectDAO.CounterAspectDAO;
+import com.epam.spring.entity.CounterLog;
 import com.epam.spring.entity.Event;
 import com.epam.spring.entity.Ticket;
 import com.epam.spring.entity.User;
+import com.epam.spring.service.EventService;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by Daria_Tomilova on 11/6/2015.
  */
 @Aspect
 public class CounterAspect {
-    private Map<Event, Integer> accessByNameCounter;
-    private Map<Event, Integer> queryOfPriceCounter;
-    private Map<Event, Integer> bookingCounter;
+    private CounterAspectDAO counterAspectDAO;
 
-    public CounterAspect() {
-        accessByNameCounter = new HashMap<Event, Integer>();
-        queryOfPriceCounter = new HashMap<Event, Integer>();
-        bookingCounter = new HashMap<Event, Integer>();
+    public CounterAspect(CounterAspectDAO counterAspectDAO) {
+        this.counterAspectDAO = counterAspectDAO;
     }
 
-    @AfterReturning(pointcut="execution(* com.epam.spring.service.EventService.getEventByName(..))",  returning="retVal")
-    public void countEventByName(Event retVal) {
-        if (retVal != null) {
-            if (!accessByNameCounter.containsKey(retVal)) {
-                accessByNameCounter.put(retVal, 1);
+    public void setCounterAspectDAO(CounterAspectDAO counterAspectDAO) {
+        this.counterAspectDAO = counterAspectDAO;
+    }
+
+    @After("execution(* com.epam.spring.service.EventService.getEventByName(..))")
+    public void countEventByName() {
+        if (!counterAspectDAO.getAllMetodNames().contains("getEventByName")) {
+            counterAspectDAO.add(new CounterLog("getEventByName", 1));
+        } else {
+            counterAspectDAO.update("getEventByName");
+        }
+    }
+
+    @After("execution(* com.epam.spring.service.BookingService.getTicketPrice(..))")
+    public void countEventPrices() {
+            if (!counterAspectDAO.getAllMetodNames().contains("getTicketPrice")) {
+                counterAspectDAO.add(new CounterLog("getTicketPrice", 1));
+            } else {
+                counterAspectDAO.update("getTicketPrice");
             }
-            accessByNameCounter.put(retVal, accessByNameCounter.get(retVal) + 1);
-        }
     }
 
-    @AfterReturning(pointcut = "execution(* com.epam.spring.service.BookingService.getTicketPrice(..)) &&args(event,..)")
-    public void countEventPrices(Event event) {
-        if (event != null) {
-            if (!queryOfPriceCounter.containsKey(event)) {
-                queryOfPriceCounter.put(event, 1);
+    @After("execution(* com.epam.spring.service.BookingService.bookTicket(..))")
+    public void countTicketsBooking() {
+            if (!counterAspectDAO.getAllMetodNames().contains("bookTicket")) {
+                counterAspectDAO.add(new CounterLog("bookTicket", 1));
+            } else {
+                counterAspectDAO.update("bookTicket");
             }
-            queryOfPriceCounter.put(event, accessByNameCounter.get(event) + 1);
-        }
     }
 
-    @AfterReturning(pointcut = "execution(* com.epam.spring.service.BookingService.bookTicket(..)) && args(user, ticket)")
-    public void countTicketsBooking(User user, Ticket ticket) {
-        if(ticket != null) {
-            if (!bookingCounter.containsKey(ticket.getEvent())) {
-                bookingCounter.put(ticket.getEvent(), 1);
-            }
-            bookingCounter.put(ticket.getEvent(), accessByNameCounter.get(ticket.getEvent()) + 1);
-        }
-    }
-
-    @Override
-    public String toString() {
-        StringBuffer sb = new StringBuffer();
-        for (Event event : accessByNameCounter.keySet()) {
-            sb.append(event.getName()).append(" was searched by name ").append(accessByNameCounter.get(event)).append(" times, ");
-            if (queryOfPriceCounter.containsKey(event))
-            sb.append("this event prise was quaried ").append(queryOfPriceCounter.get(event)).append(" times, ");
-            if (bookingCounter.containsKey(event))
-            sb.append("this event tickets were booked ").append(bookingCounter.get(event)).append(" times.");
-        }
-        return sb.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuffer sb = new StringBuffer();
+//        for (Integer eventId : accessByNameCounter.keySet()) {
+//            sb.append(eventService.getEventById(eventId).getName()).append(" was searched by name ").append(
+//                    accessByNameCounter.get(eventId)).append(" times, ");
+//            if (queryOfPriceCounter.containsKey(eventId))
+//            sb.append("this event prise was quaried ").append(queryOfPriceCounter.get(eventId)).append(" times, ");
+//            if (bookingCounter.containsKey(eventId))
+//            sb.append("this event tickets were booked ").append(bookingCounter.get(eventId)).append(" times.");
+//        }
+//        return sb.toString();
+//    }
 
 
 }

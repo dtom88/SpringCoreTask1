@@ -1,9 +1,13 @@
 package com.epam.spring.DAO;
 
 import com.epam.spring.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,51 +15,86 @@ import java.util.List;
  */
 public class UserDAO {
 
-    private User user1;
-    private User user2;
+    private JdbcTemplate jdbcTemplate;
 
-    List<User> users;
-
-    public UserDAO(User user1, User user2) {
-        users = new ArrayList<User>();
-        this.user1 = user1;
-        this.user2 = user2;
-        users.add(user1);
-        users.add(user2);
+    public UserDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public User getUser1() {
-        return user1;
-    }
-
-    public User getUser2() {
-        return user2;
-    }
-
-    public void setUser1(User user1) {
-        this.user1 = user1;
-    }
-
-    public void setUser2(User user2) {
-        this.user2 = user2;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public void add(User user) {
-        users.add(user);
+        jdbcTemplate.update("insert into users (name, email, birthday, paidtickets) values (?,?,?,?)",
+                user.getName(), user.getEmail(), user.getBirthday(), user.getPaidTickets());
     }
 
     public void remove(User user) {
-        users.remove(user);
+        jdbcTemplate.update("delete from users where id = ?", user.getId());
     }
 
     public List<User> getAll() {
-        return users;
+        return jdbcTemplate.query("select * from users", new RowMapper<User>() {
+            public User mapRow(ResultSet resultSet, int i) throws SQLException {
+                Integer id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                Date birthday = resultSet.getDate("birthday");
+                Integer paidTickets = resultSet.getInt("paidTickets");
+                User user = new User(id, name, email, birthday, paidTickets);
+                return user;
+            }
+        });
     }
 
+    public User getUserById(Integer id) {
+        return jdbcTemplate.queryForObject("select * from users where id = ?", new Object[]{id},
+                new RowMapper<User>() {
+                    public User mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Integer id = resultSet.getInt("id");
+                        String name = resultSet.getString("name");
+                        String email = resultSet.getString("email");
+                        Date birthday = resultSet.getDate("birthday");
+                        Integer paidTickets = resultSet.getInt("paidTickets");
+                        User user = new User(id, name, email, birthday, paidTickets);
+                        return user;
+                    }
+                });
+    }
     public void update(User user) {
-        users.get(user.getId() - 1).setName(user.getName());
-        users.get(user.getId() - 1).setBirthday(user.getBirthday());
-        users.get(user.getId() - 1).setEmail(user.getEmail());
-        users.get(user.getId() - 1).setPaidTickets(user.getPaidTickets());
+        Integer id = user.getId();
+        jdbcTemplate.update("update users set email = ? where id = ?", user.getEmail(), id);
+        jdbcTemplate.update("update users set paidtickets = ? where id = ?", user.getPaidTickets(), id);
+    }
+
+    public List<User> getUsersByName(String name) {
+        return jdbcTemplate.query("select * from users where name = ?", new Object[]{name},
+                new RowMapper<User>() {
+                    public User mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Integer id = resultSet.getInt("id");
+                        String name = resultSet.getString("name");
+                        String email = resultSet.getString("email");
+                        Date birthday = resultSet.getDate("birthday");
+                        Integer paidTickets = resultSet.getInt("paidTickets");
+                        User user = new User(id, name, email, birthday, paidTickets);
+                        return user;
+                    }
+                });
+    }
+
+    public User getUserByEmail(String email) {
+        return jdbcTemplate.queryForObject("select * from users where email = ?", new Object[]{email},
+                new RowMapper<User>() {
+                    public User mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Integer id = resultSet.getInt("id");
+                        String name = resultSet.getString("name");
+                        String email = resultSet.getString("email");
+                        Date birthday = resultSet.getDate("birthday");
+                        Integer paidTickets = resultSet.getInt("paidTickets");
+                        User user = new User(id, name, email, birthday, paidTickets);
+                        return user;
+                    }
+                });
     }
 }

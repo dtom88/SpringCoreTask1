@@ -1,0 +1,64 @@
+CREATE TABLE USERS (
+Id SERIAL NOT NULL,
+Name VARCHAR(50) NOT NULL,
+Email VARCHAR(50) NOT NULL,
+Birthday DATE NOT NULL,
+PaidTickets INTEGER NOT NULL,
+PRIMARY KEY (Id)
+);
+
+CREATE TABLE AUDITORIUMS (
+Id SERIAL NOT NULL,
+Name varchar(50) NOT NULL,
+Capacity INTEGER NOT NULL,
+PRIMARY KEY (Id)
+);
+
+CREATE TABLE EVENTS (
+Id SERIAL NOT NULL,
+Name varchar(50) NOT NULL,
+Date TIMESTAMP(6) NOT NULL,
+Price INTEGER NOT NULL,
+Capacity INTEGER NOT NULL,
+AuditoriumId INTEGER,
+IsDeleted BIT;
+PRIMARY KEY (Id),
+CONSTRAINT FK_AUDITORIUM_ID FOREIGN KEY (AuditoriumId) REFERENCES AUDITORIUMS(Id)
+);
+
+CREATE TABLE TICKETS (
+Id SERIAL NOT NULL,
+EventId INTEGER NOT NULL,
+Seat INTEGER NOT NULL,
+UserId INTEGER,
+SellPrice INTEGER,
+IsSold BIT,
+PRIMARY KEY (Id),
+CONSTRAINT FK_USER FOREIGN KEY (UserId) REFERENCES USERS(Id),
+CONSTRAINT FK_EVENT FOREIGN KEY (EventId) REFERENCES EVENTS(Id)
+);
+
+create table Calendar(
+Id serial,
+AuditoriumId Integer,
+date date,
+EventId Integer,
+PRIMARY KEY (Id),
+CONSTRAINT FK_audId FOREIGN KEY (auditoriumId) REFERENCES auditoriums(Id),
+CONSTRAINT FK_eventId FOREIGN KEY (EventId) REFERENCES events(Id)
+);
+
+create table DiscountsLogs(
+Id serial not null,
+UserId INTEGER,
+DiscountName varchar(50),
+Calls INTEGER,
+PRIMARY KEY (Id)
+);
+
+create table MethodUsageLogs(
+Id serial,
+methodName varchar(50),
+Counter INTEGER,
+PRIMARY KEY (Id)
+);

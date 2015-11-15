@@ -1,9 +1,7 @@
 package com.epam.spring.aspect;
 
-import com.epam.spring.entity.Event;
+import com.epam.spring.entity.*;
 import com.epam.spring.entity.User;
-import com.epam.spring.service.UserService;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
@@ -24,7 +22,7 @@ public class LuckyWinnerAspect {
     }
 
     @Before("execution(* com.epam.spring.service.BookingService.getTicketPrice(..)) && args(event, seat, user)")
-    public void checkLuckyUser(Event event, Integer seat, User user) {
+    public void checkLuckyUser(Event event, java.lang.Integer seat, User user) {
         if (isUserLucky(user)) {
             List<Event> events = user.getLuckyEvents();
             events.add(event);

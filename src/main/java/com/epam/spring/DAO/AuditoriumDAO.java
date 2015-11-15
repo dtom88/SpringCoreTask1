@@ -1,11 +1,17 @@
 package com.epam.spring.DAO;
 
 import com.epam.spring.entity.Auditorium;
+import com.epam.spring.entity.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,68 +19,85 @@ import java.util.List;
  */
 public class AuditoriumDAO {
 
-//    private Auditorium auditorium1;
-//    private Auditorium auditorium2;
+    private JdbcTemplate jdbcTemplate;
 
-    private List<Auditorium> auditoriums;
-
-    public AuditoriumDAO(List<Auditorium> auditoriums) {
-        this.auditoriums = auditoriums;
-//        this.auditorium1 = auditorium1;
-//        this.auditorium2 = auditorium2;
-//        auditoriums.add(auditorium1);
-//        auditoriums.add(auditorium2);
+    public AuditoriumDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Auditorium> getAuditoriums() {
-        return auditoriums;
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
-
-    public void setAuditoriums(List<Auditorium> auditoriums) {
-        this.auditoriums = auditoriums;
-    }
-
-    //    public Auditorium getAuditorium1() {
-//        return auditorium1;
-//    }
-//
-//    public Auditorium getAuditorium2() {
-//        return auditorium2;
-//    }
-//
-//    public void setAuditorium1(Auditorium auditorium1) {
-//        this.auditorium1 = auditorium1;
-//    }
-//
-//    public void setAuditorium2(Auditorium auditorium2) {
-//        this.auditorium2 = auditorium2;
-//    }
 
     public void add(Auditorium auditorium) {
-        auditoriums.add(auditorium);
+        jdbcTemplate.update("insert into auditoriums (name, capacity) values ( ?, ?)", auditorium.getName(),
+                auditorium.getNumbersOfSeats());
     }
 
     public void remove(Auditorium auditorium) {
-        auditoriums.remove(auditorium);
+        jdbcTemplate.update("delete from auditoriums where id = ?", auditorium.getId());
     }
 
     public void update(Auditorium auditorium) {
-        auditoriums.get(auditorium.getId() - 1).setName(auditorium.getName());
-        auditoriums.get(auditorium.getId() - 1).setNumbersOfSeats(auditorium.getNumbersOfSeats());
-        auditoriums.get(auditorium.getId() - 1).setVipSeats(auditorium.getVipSeats());
-        auditoriums.get(auditorium.getId() - 1).setCalendar(auditorium.getCalendar());
+        jdbcTemplate.update("update auditoriums set name = ? where id = ?", auditorium.getName(), auditorium.getId());
+        jdbcTemplate.update("update auditoriums set capacity = ? where id = ?", auditorium.getNumbersOfSeats(), auditorium.getId());
     }
 
     public List<Auditorium> getAll() {
-        return auditoriums;
+        return jdbcTemplate.query("select * from auditoriums", new RowMapper<Auditorium>() {
+            public Auditorium mapRow(ResultSet resultSet, int i) throws SQLException {
+                Integer id = resultSet.getInt("Id");
+                String name = resultSet.getString("Name");
+                Integer capasity = resultSet.getInt("capacity");
+                Auditorium auditorium = new Auditorium();
+                return auditorium;
+            }
+        });
     }
 
     public Auditorium getAuditoriumByName(String name) {
-      for (Auditorium auditorium : auditoriums) {
-          if (auditorium.getName().equals(name)) {
-              return auditorium;
-          }
-      }
-        return null;
+        Auditorium auditorium = jdbcTemplate.queryForObject("select * from auditoriums where name = ?", new Object[]{name},
+                new RowMapper<Auditorium>() {
+                    public Auditorium mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Integer id = resultSet.getInt("Id");
+                        String name = resultSet.getString("Name");
+                        Integer capacity = resultSet.getInt("capacity");
+                        Auditorium auditorium = new Auditorium(id, name, capacity);
+                        return auditorium;
+                    }
+                });
+        List<Date> calendar = jdbcTemplate.query("select * from calendar where auditoriumId = ?", new Object[]{auditorium.getId()},
+                new RowMapper<Date>() {
+                    public Date mapRow(ResultSet resultSet, int i) throws SQLException {
+                        return resultSet.getDate("Date");
+                    }
+                });
+        auditorium.setCalendar(calendar);
+        return auditorium;
+    }
+    public Auditorium getAuditoriumById(Integer id) {
+        final List<Date> calendar = jdbcTemplate.query("select * from calendar where auditoriumId = ?", new Object[]{id},
+                new RowMapper<Date>() {
+                    public Date mapRow(ResultSet resultSet, int i) throws SQLException {
+                        return resultSet.getDate("Date");
+                    }
+                });
+        Auditorium auditorium = jdbcTemplate.queryForObject("select * from auditoriums where id = ?", new Object[]{id},
+                new RowMapper<Auditorium>() {
+                    public Auditorium mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Integer id = resultSet.getInt("Id");
+                        String name = resultSet.getString("Name");
+                        Integer capacity = resultSet.getInt("capacity");
+                        Auditorium auditorium = new Auditorium(id, name, capacity);
+                        return auditorium;
+                    }
+                });
+        auditorium.setCalendar(calendar);
+        return auditorium;
+    }
+
+    public void updateCalendar(Event event, Auditorium auditorium) {
+        jdbcTemplate.update("insert into calendar (auditoriumid, date, eventid) values(?, ?, ?)",
+                auditorium.getId(), event.getDate(), event.getId());
     }
 }

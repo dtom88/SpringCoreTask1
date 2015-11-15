@@ -2,11 +2,13 @@ package com.epam.spring.service;
 
 import com.epam.spring.DAO.AuditoriumDAO;
 import com.epam.spring.DAO.EventDAO;
+import com.epam.spring.DAO.TicketDAO;
 import com.epam.spring.entity.Auditorium;
 import com.epam.spring.entity.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,14 +18,19 @@ public class AuditoriumService {
 
     private AuditoriumDAO auditoriumDAO;
     private EventDAO eventDAO;
+    private TicketDAO ticketDAO;
 
     public AuditoriumService(AuditoriumDAO auditoriumDAO, EventDAO eventDAO) {
         this.auditoriumDAO = auditoriumDAO;
         this.eventDAO = eventDAO;
     }
 
-    public AuditoriumDAO getAuditoriumDAO() {
-        return auditoriumDAO;
+    public void setEventDAO(EventDAO eventDAO) {
+        this.eventDAO = eventDAO;
+    }
+
+    public void setTicketDAO(TicketDAO ticketDAO) {
+        this.ticketDAO = ticketDAO;
     }
 
     public void setAuditoriumDAO(AuditoriumDAO auditoriumDAO) {
@@ -38,28 +45,26 @@ public class AuditoriumService {
         return auditoriumDAO.getAuditoriumByName(name).getNumbersOfSeats();
     }
 
-    public List<Integer> getVipSeats(String name) {
-        return auditoriumDAO.getAuditoriumByName(name).getVipSeats();
-    }
-
-    public void assignAuditorium(Event event, Auditorium auditorium) {
+    public boolean assignAuditorium(Event event, Auditorium auditorium) {
         if (!auditorium.getCalendar().contains(event.getDate()) && auditorium.getNumbersOfSeats() >= event.getCapacity()) {
-            List<LocalDate> calendar = auditorium.getCalendar();
+            List<Date> calendar = auditorium.getCalendar();
             calendar.add(event.getDate());
+            auditoriumDAO.updateCalendar(event,auditorium);
             auditorium.setCalendar(calendar);
             auditoriumDAO.update(auditorium);
-            event.setAuditorium(auditorium);
+            event.setAuditoriumId(auditorium.getId());
             eventDAO.update(event);
+            ticketDAO.createTicketsForEvent(event);
+            return true;
         }
+        return false;
     }
 
     public Auditorium getAuditoriumByName(String name) {
-        List<Auditorium> auds = auditoriumDAO.getAll();
-        for(Auditorium a : auds) {
-            if (a.getName().equals(name)) {
-                return a;
-            }
-        }
-        return null;
+        return auditoriumDAO.getAuditoriumByName(name);
+    }
+
+    public Auditorium getAuditoriumById(Integer id) {
+        return auditoriumDAO.getAuditoriumById(id);
     }
 }

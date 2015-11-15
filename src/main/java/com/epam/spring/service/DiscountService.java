@@ -1,13 +1,10 @@
 package com.epam.spring.service;
 
 import com.epam.spring.DAO.DiscountStrategyDAO;
-import com.epam.spring.entity.DiscountStrategy;
-import com.epam.spring.entity.Event;
-import com.epam.spring.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.epam.spring.entity.*;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Daria_Tomilova on 10/24/2015.
@@ -15,14 +12,9 @@ import java.util.Date;
 public class DiscountService {
 
     private DiscountStrategyDAO discountStrategyDAO;
-    private UserService userService;
 
     public DiscountService(DiscountStrategyDAO discountStrategyDAO) {
         this.discountStrategyDAO = discountStrategyDAO;
-    }
-
-    public DiscountStrategyDAO getDiscountStrategyDAO() {
-        return discountStrategyDAO;
     }
 
     public void setDiscountStrategyDAO(DiscountStrategyDAO discountStrategyDAO) {
@@ -33,20 +25,36 @@ public class DiscountService {
         Double discount = 0.0;
         ArrayList<DiscountStrategy> discounts = discountStrategyDAO.getAll();
 
-        if (user.getLuckyEvents().contains(event)) {
+        if (user.getLuckyEvents().contains(event))
             return 1.0;
-        }
-
         for (DiscountStrategy ds : discounts) {
-            if (ds.getName().equals("tenthTicketDiscount") && user.getPaidTickets() % 10 == 9) {
+            if (isTenthTicketDiscount(ds, user))
                 discount += ds.getDiscount();
-            }
-            if (ds.getName().equals("birthDayDiscount") && user.getBirthday().getMonthValue() == event.getDate().getMonthValue()
-                    && user.getBirthday().getDayOfMonth() == event.getDate().getDayOfMonth()) {
+            if (isBirthdayDiscount(ds, user, event))
                 discount += ds.getDiscount();
-            }
         }
         return discount;
+    }
+
+    public Boolean isBirthdayDiscount(DiscountStrategy ds, User user, Event event) {
+        Boolean isDiscont = false;
+        if (ds.getName().equals("birthDayDiscount") && user.getBirthday().getMonth() == event.getDate().getMonth()
+                && user.getBirthday().getDate() == event.getDate().getDate()) {
+            isDiscont = true;
+        }
+        return isDiscont;
+    }
+
+    public Boolean isTenthTicketDiscount(DiscountStrategy ds, User user) {
+        Boolean isDiscont = false;
+        if (ds.getName().equals("tenthTicketDiscount") && user.getPaidTickets() % 10 == 9) {
+            isDiscont = true;
+        }
+        return isDiscont;
+    }
+
+    public List<DiscountStrategy> getAllDiscounts() {
+       return discountStrategyDAO.getAll();
     }
 
 }

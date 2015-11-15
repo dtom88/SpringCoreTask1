@@ -1,6 +1,5 @@
 package com.epam.spring.entity;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -10,21 +9,39 @@ public class Event {
 
     private Integer id;
     private String name;
-    private LocalDate date;
-    private String time;
+    private Date date;
     private Integer basePrice;
     private Integer capacity;
-    private Auditorium auditorium;
+    private Integer auditoriumId;
+    private Boolean isDeleted;
 
-    public Event(Integer id, String name, LocalDate date, String time, Integer basePrice, Integer capacity) {
+    public Event(Integer id, String name, Date date, Integer basePrice, Integer capacity, Integer auditoriumId ) {
         this.id = id;
         this.name = name;
         this.date = date;
-        this.time = time;
         this.basePrice = basePrice;
         this.capacity = capacity;
-        auditorium = new Auditorium();
+        this.auditoriumId = auditoriumId;
+        this.isDeleted = false;
     }
+
+    public Event(Integer id, String name, Date date, Integer basePrice, Integer capacity, Integer auditoriumId, Boolean isDeleted) {
+        this.id = id;
+        this.name = name;
+        this.date = date;
+        this.basePrice = basePrice;
+        this.capacity = capacity;
+        this.auditoriumId = auditoriumId;
+        this.isDeleted = isDeleted;
+    }
+
+    public Event(String name, Date date, Integer basePrice, Integer capacity ) {
+        this.name = name;
+        this.date = date;
+        this.basePrice = basePrice;
+        this.capacity = capacity;
+    }
+
 
     public Integer getId() {
         return id;
@@ -34,20 +51,24 @@ public class Event {
         return name;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
-    }
-
-    public String getTime() {
-        return time;
     }
 
     public Integer getBasePrice() {
         return basePrice;
     }
 
-    public Auditorium getAuditorium() {
-        return auditorium;
+    public Integer getAuditoriumId() {
+        return auditoriumId;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public void setId(Integer id) {
@@ -58,12 +79,8 @@ public class Event {
         this.name = name;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public void setBasePrice(Integer basePrice) {
@@ -78,8 +95,8 @@ public class Event {
         this.capacity = capacity;
     }
 
-    public void setAuditorium(Auditorium auditorium) {
-        this.auditorium = auditorium;
+    public void setAuditoriumId(Integer auditoriumId) {
+        this.auditoriumId = auditoriumId;
     }
 
     @Override
@@ -89,8 +106,8 @@ public class Event {
         sb.append("event_name: ").append(name).append("\t");
         sb.append("event_price: ").append(basePrice).append("\t");
         sb.append("date: ").append(date.toString()).append("\t");
-        sb.append("time: ").append(time).append("\t");
-        sb.append("max_event_audience ").append(capacity);
+        sb.append("max_event_audience.").append(capacity);
+
         return sb.toString();
     }
 }
