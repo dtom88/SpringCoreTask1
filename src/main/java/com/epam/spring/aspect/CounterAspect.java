@@ -55,19 +55,4 @@ public class CounterAspect {
             }
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuffer sb = new StringBuffer();
-//        for (Integer eventId : accessByNameCounter.keySet()) {
-//            sb.append(eventService.getEventById(eventId).getName()).append(" was searched by name ").append(
-//                    accessByNameCounter.get(eventId)).append(" times, ");
-//            if (queryOfPriceCounter.containsKey(eventId))
-//            sb.append("this event prise was quaried ").append(queryOfPriceCounter.get(eventId)).append(" times, ");
-//            if (bookingCounter.containsKey(eventId))
-//            sb.append("this event tickets were booked ").append(bookingCounter.get(eventId)).append(" times.");
-//        }
-//        return sb.toString();
-//    }
-
-
 }

@@ -37,8 +37,6 @@
         </property>
     </bean>
 
-    <bean id="app" class="com.epam.spring.App"/>
-
     <bean id="counterBean" class="com.epam.spring.aspect.CounterAspect">
         <constructor-arg ref="counterAspectDAO"/>
     </bean>
@@ -70,8 +68,12 @@
                                  <!--pointcut="execution(* *.bookTicket(..))" returning="retVal"/>-->
         <!--</aop:aspect>-->
         <!--<aop:aspect id="discountAspect" ref="discountCounterBean">-->
-            <!--<aop:after-returning method="com.epam.spring.aspect.DiscountAspect.countGetDiscount"-->
-                                 <!--pointcut="execution(Double com.epam.spring.service.DiscountService.getDiscount(..) &amp;&amp; args(userId,..)"/>-->
+            <!--<aop:after-returning method="com.epam.spring.aspect.DiscountAspect.countBirthdayDiscount"-->
+                                 <!--pointcut="execution(* com.epam.spring.service.DiscountService.isBirthdayDiscount(..)) &amp;&amp; args(ds, user,..)"-->
+                    <!--returning="retVal"/>-->
+            <!--<aop:after-returning method="com.epam.spring.aspect.DiscountAspect.countTenthTicketDiscount"-->
+                                 <!--pointcut="execution(* com.epam.spring.service.DiscountService.isTenthTicketDiscount(..)) &amp;&amp; args(ds, user)"-->
+                                 <!--returning="retVal"/>-->
         <!--</aop:aspect>-->
         <!--<aop:aspect id="luckyAspect" ref="luckyWinner">-->
             <!--<aop:before method="com.epam.spring.aspect.LuckyWinnerAspect.checkLuckyUser"-->

@@ -13,7 +13,7 @@ import java.util.List;
 @Aspect
 public class LuckyWinnerAspect {
 
-    private boolean isUserLucky(User user) {
+    private boolean isUserLucky() {
         boolean isLucky = false;
         if (Math.random()*100 > 50) {
             isLucky = true;
@@ -21,13 +21,13 @@ public class LuckyWinnerAspect {
         return isLucky;
     }
 
-    @Before("execution(* com.epam.spring.service.BookingService.getTicketPrice(..)) && args(event, seat, user)")
-    public void checkLuckyUser(Event event, java.lang.Integer seat, User user) {
-        if (isUserLucky(user)) {
+    @Before("execution(* com.epam.spring.service.BookingService.getTicketPrice(..)) && args(event,.., user)")
+    public void checkLuckyUser(Event event, User user) {
+        if (isUserLucky()) {
             List<Event> events = user.getLuckyEvents();
             events.add(event);
             user.setLuckyEvents(events);
-            System.out.println("!!!for user " + ((User) user).getName() + " " + ((Event) event).getName() + " is lucky event");
+            System.out.println("!!!for user " + (user).getName() + " " + (event).getName() + " is lucky event");
         } else {
             System.out.println("!!!this user is loser!");
         }

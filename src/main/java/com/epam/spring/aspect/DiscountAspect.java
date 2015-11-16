@@ -27,24 +27,7 @@ public class DiscountAspect {
         this.discountAspectDAO = discountAspectDAO;
     }
 
-//    @After("execution(Double com.epam.spring.service.DiscountService.getDiscount(..)) && args(user,..))")
-//    public void countGetDiscounts(User user) {
-//        DiscountLog discountLog = new DiscountLog(user.getId(),"", )
-//       discountAspectDAO.add();
-//    }
-//
-//    @Override
-//    public String toString() {
-//        StringBuffer sb = new StringBuffer();
-//        for (User user : userDiscountCounter.keySet()) {
-//            sb.append(user.getName()).append("'s discount was asked ").append(userDiscountCounter.get(user)).append(" times; ");
-//            sb.append("\n");
-//        }
-//        sb.append("Discounts were asked ").append(totalCounter).append(" times.");
-//        return sb.toString();
-//    }
-
-    @AfterReturning(pointcut = "execution(* com.epam.spring.service.DiscountService.isBirthdayDiscount(..)) && args(ds, user,..)",
+    @AfterReturning (pointcut = "execution(* com.epam.spring.service.DiscountService.isBirthdayDiscount(..)) && args(ds, user,..)",
             returning="retVal")
     public void countBirthdayDiscount(Boolean retVal, DiscountStrategy ds, User user) {
         if (retVal) {
@@ -57,7 +40,7 @@ public class DiscountAspect {
         }
     }
 
-    @AfterReturning(pointcut = "execution(* com.epam.spring.service.DiscountService.isTenthTicketDiscount(..)) && args(ds, user)",
+    @AfterReturning (pointcut = "execution(* com.epam.spring.service.DiscountService.isTenthTicketDiscount(..)) && args(ds, user)",
             returning = "retVal")
     public void countTenthTicketDiscount(Boolean retVal, DiscountStrategy ds, User user) {
         if (retVal) {

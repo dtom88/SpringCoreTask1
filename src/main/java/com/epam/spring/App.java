@@ -51,10 +51,6 @@ public class App {
         System.out.println("There are " + bookingService.getTicketsForEvent(event).size() + " concert tickets");
         System.out.println("Discount for Petya is " + discountService.getDiscount(user, event) * 100 + "%");
         System.out.println("Concert ticket price for Petya is " + bookingService.getTicketPrice(event, user));
-
-        System.out.println();
-        System.out.println(cAsp);
-        System.out.println(discAsp);
     }
 
     }
