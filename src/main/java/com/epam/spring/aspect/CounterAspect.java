@@ -1,10 +1,7 @@
 package com.epam.spring.aspect;
 
 import com.epam.spring.aspectDAO.CounterAspectDAO;
-import com.epam.spring.entity.CounterLog;
-import com.epam.spring.entity.Event;
-import com.epam.spring.entity.Ticket;
-import com.epam.spring.entity.User;
+import com.epam.spring.entity.*;
 import com.epam.spring.service.EventService;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;

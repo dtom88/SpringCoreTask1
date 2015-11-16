@@ -27,7 +27,7 @@ public class LuckyWinnerAspect {
             List<Event> events = user.getLuckyEvents();
             events.add(event);
             user.setLuckyEvents(events);
-            System.out.println("!!!for user " + (user).getName() + " " + (event).getName() + " is lucky event");
+            System.out.println("!!!for user " + user.getName() + " " + event.getName() + " is lucky event");
         } else {
             System.out.println("!!!this user is loser!");
         }

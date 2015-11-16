@@ -25,6 +25,4 @@
         <constructor-arg ref="eventDAO"/>
     </bean>
 
-
-
 </beans>

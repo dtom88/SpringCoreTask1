@@ -27,7 +27,7 @@ public class DiscountAspect {
         this.discountAspectDAO = discountAspectDAO;
     }
 
-    @AfterReturning (pointcut = "execution(* com.epam.spring.service.DiscountService.isBirthdayDiscount(..)) && args(ds, user,..)",
+    @AfterReturning (pointcut = "execution(Boolean com.epam.spring.service.DiscountService.isBirthdayDiscount(..)) && args(ds, user,..)",
             returning="retVal")
     public void countBirthdayDiscount(Boolean retVal, DiscountStrategy ds, User user) {
         if (retVal) {
@@ -40,7 +40,7 @@ public class DiscountAspect {
         }
     }
 
-    @AfterReturning (pointcut = "execution(* com.epam.spring.service.DiscountService.isTenthTicketDiscount(..)) && args(ds, user)",
+    @AfterReturning (pointcut = "execution(Boolean com.epam.spring.service.DiscountService.isTenthTicketDiscount(..)) && args(ds, user)",
             returning = "retVal")
     public void countTenthTicketDiscount(Boolean retVal, DiscountStrategy ds, User user) {
         if (retVal) {
