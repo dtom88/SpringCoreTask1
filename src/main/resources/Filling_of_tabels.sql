@@ -6,12 +6,19 @@ INSERT INTO public.auditoriums(
     VALUES ('Class_with_balcony', 20);
 
 
-INSERT INTO public.events(
-            name, date, price, capacity, auditoriumid)
-    VALUES ('concert', to_timestamp('11/01/2015 07:00 PM', 'MM/DD/YYYY HH:MI PM'), 200, 10, NULL);
-INSERT INTO public.events(
-            name, date, price, capacity, auditoriumid)
-    VALUES ('lecture', to_timestamp('01/01/2016 11:00 PM', 'MM/DD/YYYY HH:MI PM'), 100, 15, NULL);
+--INSERT INTO public.events(
+--            name, date, price, capacity, auditoriumid)
+--    VALUES ('concert', to_timestamp('11/01/2015 07:00 PM', 'MM/DD/YYYY HH:MI PM'), 200, 10, NULL);
+--INSERT INTO public.events(
+--            name, date, price, capacity, auditoriumid)
+--    VALUES ('lecture', to_timestamp('01/01/2016 11:00 PM', 'MM/DD/YYYY HH:MI PM'), 100, 15, NULL);
+
+    INSERT INTO public.events(
+                name, date, price, capacity, auditoriumid)
+        VALUES ('concert', parsedatetime('11/01/2015 07:00:00.00', 'DD/MM/YYYY HH:mm:ss.ss'), 200, 10, NULL);
+    INSERT INTO public.events(
+                name, date, price, capacity, auditoriumid)
+        VALUES ('lecture', parsedatetime('01/01/2016 11:00:00.00', 'DD/MM/YYYY HH:MM:ss.SS'), 100, 15, NULL);
 
 INSERT INTO public.tickets(
             eventid, seat, userid, sellprice, issold)
@@ -46,8 +53,8 @@ INSERT INTO public.tickets(
 
 INSERT INTO public.users(
             name, email, birthday, paidtickets)
-    VALUES ('Petya', 'Petya@gmail.com',  to_date( '11/01/1991 02:35 AM', 'MM/DD/YYYY HH:MI AM'), 12);
+    VALUES ('Petya', 'Petya@gmail.com',  parsedatetime( '11/01/1991 02:35:00.00', 'MM/DD/YYYY HH:MM:SS.SS'), 12);
 INSERT INTO public.users(
             name, email, birthday, paidtickets)
-    VALUES ('Nadya', 'Nadya@gmail.com',  to_date( '12/13/1988 05:35 AM', 'MM/DD/YYYY HH:MI AM'), 9);
+    VALUES ('Nadya', 'Nadya@gmail.com',  parsedatetime( '12/13/1988 05:35:00.00', 'MM/DD/YYYY HH:MM:SS.SS'), 9);
 

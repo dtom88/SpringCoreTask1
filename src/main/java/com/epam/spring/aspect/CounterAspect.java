@@ -5,6 +5,7 @@ import com.epam.spring.entity.*;
 import com.epam.spring.service.EventService;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class CounterAspect {
         }
     }
 
-    @After("execution(* com.epam.spring.service.BookingService.getTicketPrice(..))")
+    @After("execution(* com.epam.spring.service.*BookingService.getTicketPrice(..))")
     public void countEventPrices() {
             if (!counterAspectDAO.getAllMetodNames().contains("getTicketPrice")) {
                 counterAspectDAO.add(new CounterLog("getTicketPrice", 1));
