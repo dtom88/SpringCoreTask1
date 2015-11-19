@@ -20,9 +20,10 @@ public class AuditoriumService {
     private EventDAO eventDAO;
     private TicketDAO ticketDAO;
 
-    public AuditoriumService(AuditoriumDAO auditoriumDAO, EventDAO eventDAO) {
+    public AuditoriumService(AuditoriumDAO auditoriumDAO, EventDAO eventDAO, TicketDAO ticketDAO) {
         this.auditoriumDAO = auditoriumDAO;
         this.eventDAO = eventDAO;
+        this.ticketDAO = ticketDAO;
     }
 
     public void setEventDAO(EventDAO eventDAO) {

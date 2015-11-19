@@ -23,6 +23,7 @@
     <bean id="auditoriumService" class="com.epam.spring.service.AuditoriumService">
         <constructor-arg ref="auditoriumDAO"/>
         <constructor-arg ref="eventDAO"/>
+        <constructor-arg ref="ticketDAO"/>
     </bean>
 
 </beans>

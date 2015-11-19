@@ -41,7 +41,7 @@ public class AuditoriumDAO {
     public void update(Auditorium auditorium) {
         jdbcTemplate.update("update auditoriums set name = ? where id = ?", auditorium.getName(), auditorium.getId());
         jdbcTemplate.update("update auditoriums set capacity = ? where id = ?", auditorium.getNumbersOfSeats(), auditorium.getId());
-    }
+}
 
     public List<Auditorium> getAll() {
         return jdbcTemplate.query("select * from auditoriums", new RowMapper<Auditorium>() {
