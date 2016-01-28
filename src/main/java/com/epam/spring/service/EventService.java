@@ -1,12 +1,11 @@
 package com.epam.spring.service;
 
 import com.epam.spring.DAO.EventDAO;
-import com.epam.spring.entity.Auditorium;
 import com.epam.spring.entity.Event;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Daria_Tomilova on 10/24/2015.

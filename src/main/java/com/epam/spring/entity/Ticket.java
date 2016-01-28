@@ -1,7 +1,5 @@
 package com.epam.spring.entity;
 
-import java.lang.Integer;
-
 /**
  * Created by Daria_Tomilova on 10/24/2015.
  */

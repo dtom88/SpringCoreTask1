@@ -1,7 +1,6 @@
 package com.epam.spring.DAO;
 
 import com.epam.spring.entity.DiscountStrategy;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 

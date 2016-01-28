@@ -3,16 +3,9 @@ package com.epam.spring.aspect;
 import com.epam.spring.aspectDAO.DiscountAspectDAO;
 import com.epam.spring.entity.DiscountLog;
 import com.epam.spring.entity.DiscountStrategy;
-import com.epam.spring.entity.Event;
 import com.epam.spring.entity.User;
-import com.epam.spring.service.DiscountService;
-import com.epam.spring.service.UserService;
-import org.aspectj.lang.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
 
 /**
  * Created by Daria_Tomilova on 08-Nov-15.

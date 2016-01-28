@@ -1,7 +1,9 @@
 package com.epam.spring.service;
 
 import com.epam.spring.DAO.DiscountStrategyDAO;
-import com.epam.spring.entity.*;
+import com.epam.spring.entity.DiscountStrategy;
+import com.epam.spring.entity.Event;
+import com.epam.spring.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;

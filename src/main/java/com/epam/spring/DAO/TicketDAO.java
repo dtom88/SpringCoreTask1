@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
 
 /**
  * Created by Daria_Tomilova on 31-Oct-15.
