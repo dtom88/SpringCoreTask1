@@ -24,39 +24,45 @@ public class DiscountService {
     }
 
     public Double getDiscount(User user, Event event) {
+        if (user == null) {
+            throw new IllegalArgumentException("User should not be null");
+        }
         Double discount = 0.0;
         ArrayList<DiscountStrategy> discounts = discountStrategyDAO.getAll();
 
         if (user.getLuckyEvents().contains(event))
             return 1.0;
         for (DiscountStrategy ds : discounts) {
-            if (isTenthTicketDiscount(ds, user))
+            if (hasTenthTicketDiscount(user))
                 discount += ds.getDiscount();
-            if (isBirthdayDiscount(ds, user, event))
+            if (hasBirthdayDiscount(user, event))
                 discount += ds.getDiscount();
         }
         return discount;
     }
 
-    public Boolean isBirthdayDiscount(DiscountStrategy ds, User user, Event event) {
+    public Boolean hasBirthdayDiscount(User user, Event event) {
         Boolean isDiscont = false;
-        if (ds.getName().equals("birthDayDiscount") && user.getBirthday().getMonth() == event.getDate().getMonth()
+        if (user.getBirthday().getMonth() == event.getDate().getMonth()
                 && user.getBirthday().getDate() == event.getDate().getDate()) {
             isDiscont = true;
         }
         return isDiscont;
     }
 
-    public Boolean isTenthTicketDiscount(DiscountStrategy ds, User user) {
+    public Boolean hasTenthTicketDiscount(User user) {
         Boolean isDiscont = false;
-        if (ds.getName().equals("tenthTicketDiscount") && user.getPaidTickets() % 10 == 9) {
+        if (user.getPaidTickets() % 10 == 9) {
             isDiscont = true;
         }
         return isDiscont;
     }
 
     public List<DiscountStrategy> getAllDiscounts() {
-       return discountStrategyDAO.getAll();
+        return discountStrategyDAO.getAll();
     }
 
+    public DiscountStrategy getDiscountByName(String name) {
+        return discountStrategyDAO.getDiscountByName(name);
+    }
 }

@@ -3,7 +3,6 @@ package com.epam.spring.service;
 import com.epam.spring.DAO.EventDAO;
 import com.epam.spring.entity.Event;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -42,31 +41,31 @@ public class EventService {
     }
 
     public List<Event> getAllEvent() {
-       return  eventDAO.getAll();
+        return eventDAO.getAll();
     }
 
-    public Collection<Event> getForDateRange(Date from, Date to) {
+    public List<Event> getForDateRange(Date from, Date to) {
         List<Event> events = eventDAO.getAll();
-        for(Event event : events) {
-            if(event.getDate().before(from) && event.getDate().after(to)) {
+        for (Event event : events) {
+            if (event.getDate().before(from) && event.getDate().after(to)) {
                 events.remove(event);
             }
         }
-        return  events;
+        return events;
     }
 
     public List<Event> getNextEvents(Date to) {
         List<Event> events = eventDAO.getAll();
-        for(Event event : events) {
-            if(event.getDate().before(to)) {
-               events.remove(event);
+        for (Event event : events) {
+            if (event.getDate().before(to)) {
+                events.remove(event);
             }
         }
         return events;
     }
 
     public Event getEventById(Integer id) {
-       return eventDAO.getEventById(id);
+        return eventDAO.getEventById(id);
     }
 
 }

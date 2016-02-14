@@ -46,7 +46,7 @@ public class BookingService {
 
     public Double getTicketPrice(Event event, User user) {
         Integer price = event.getBasePrice();
-        return price*(1 - discountService.getDiscount(user, event));
+        return price * (1 - discountService.getDiscount(user, event));
     }
 
     public void bookTicket(User user, Ticket ticket) {
@@ -58,6 +58,10 @@ public class BookingService {
             user.setPaidTickets(user.getPaidTickets() + 1);
             userDAO.update(user);
         }
+    }
+
+    public Ticket getTicketById(Integer ticketId) {
+        return ticketDAO.getTicketById(ticketId);
     }
 
 }

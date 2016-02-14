@@ -48,16 +48,32 @@ public class TicketDAO {
                 Integer userId = resultSet.getInt("userId");
                 Double sellPrice = resultSet.getDouble("sellPrice");
                 Boolean isSold = resultSet.getBoolean("isSold");
-                Ticket ticket = new Ticket(id, eventId,seat,userId, isSold, sellPrice);
+                Ticket ticket = new Ticket(id, eventId, seat, userId, isSold, sellPrice);
                 return ticket;
             }
         });
     }
 
+    public Ticket getTicketById(Integer id) {
+        return jdbcTemplate.queryForObject("select * from tickets where id = ?", new Object[]{id},
+                new RowMapper<Ticket>() {
+                    public Ticket mapRow(ResultSet resultSet, int i) throws SQLException {
+                        Integer id = resultSet.getInt("Id");
+                        Integer eventId = resultSet.getInt("eventId");
+                        Integer seat = resultSet.getInt("seat");
+                        Integer userId = resultSet.getInt("userId");
+                        Boolean isSold = resultSet.getBoolean("isSold");
+                        Double sellPrice = resultSet.getDouble("sellPrice");
+                        Ticket ticket = new Ticket(id, eventId, seat, userId, isSold, sellPrice);
+                        return ticket;
+                    }
+                });
+    }
+
     public void createTicketsForEvent(Event event) {
-        for (int i = 0; i < event.getCapacity(); i ++) {
+        for (int i = 0; i < event.getCapacity(); i++) {
             jdbcTemplate.update("insert into tickets (eventId, seat, userId, sellPrice, isSold) values (?,?,?,?,?)",
-                    event.getId(), i+1, null, null, '0');
+                    event.getId(), i + 1, null, null, '0');
         }
     }
 }

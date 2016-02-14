@@ -3,6 +3,7 @@ package com.epam.spring.DAO;
 import com.epam.spring.entity.DiscountStrategy;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Daria_Tomilova on 31-Oct-15.
@@ -43,5 +44,15 @@ public class DiscountStrategyDAO {
 
     public ArrayList<DiscountStrategy> getAll() {
         return discountList;
+    }
+
+    public DiscountStrategy getDiscountByName(String name) {
+//       return discountList.stream().filter(ds -> name.equals(ds.getName())).findAny().get();
+        Iterator iterator = discountList.iterator();
+        DiscountStrategy ds = (DiscountStrategy) iterator.next();
+        while (!name.equals(ds.getName())) {
+            ds = (DiscountStrategy) iterator.next();
+        }
+        return ds;
     }
 }

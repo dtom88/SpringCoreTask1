@@ -28,7 +28,7 @@ public class UserService {
         userDAO.remove(user);
     }
 
-    public User getUserById(java.lang.Integer id) {
+    public User getUserById(Integer id) {
         return userDAO.getUserById(id);
     }
 
@@ -41,12 +41,16 @@ public class UserService {
 
     }
 
-    public Integer getBookedTickets(User user) {
+    public Integer getBookedTickets(Integer userId) {
+        User user = userDAO.getUserById(userId);
+        if (user == null) {
+            return -1;
+        }
         return user.getPaidTickets();
     }
 
     public List<User> getAllUsers() {
-        return  userDAO.getAll();
+        return userDAO.getAll();
     }
 
 
