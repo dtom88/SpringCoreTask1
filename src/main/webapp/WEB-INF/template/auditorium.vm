@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Auditorium: $auditorium.id</title>
+</head>
+<body bgcolor="#faf7f1">
+<b>auditorium_name:</b> $auditorium.name<br/>
+<b>number_of_seats:</b> $auditorium.numbersOfSeats<br/>
+</body>
+</html>

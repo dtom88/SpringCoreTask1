@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Ticket: $ticket.id</title></head>
+<body bgcolor="#faf7f1">
+<b>ticket_event:</b> $ticket.eventId<br/>
+<b>seat_number:</b> $ticket.seat<br/>
+<b>isSold:</b> $event.isSold<br/>
+</body>
+</html>

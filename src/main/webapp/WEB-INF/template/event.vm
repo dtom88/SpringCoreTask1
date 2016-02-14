@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Event: $event.id</title></head>
+<body bgcolor="#faf7f1">
+<b>event_name:</b> $event.name<br/>
+<b>event_price:</b> $event.basePrice<br/>
+<b>date:</b> $event.date<br/>
+<b>max_event_audience:</b> $event.capacity<br/>
+</body>
+</html>
+

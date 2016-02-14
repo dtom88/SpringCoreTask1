@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>User: $user.id</title>
+</head>
+<body bgcolor="#faf7f1">
+<b>user_name:</b> $user.name<br/>
+<b>user_email:</b> $user.email<br/>
+<b>user_b-Day:</b> $user.birthday<br/>
+<b>number_of_paid_tickets:</b> $user.paidTickets<br/>
+</body>
+</html>

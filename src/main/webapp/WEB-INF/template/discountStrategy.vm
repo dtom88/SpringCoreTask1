@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Discount_Strategy: $discountStrategy.name</title></head>
+<body bgcolor="#faf7f1">
+<b>discount:</b> $discountStrategy.discount<br/>
+</body>
+</html>
