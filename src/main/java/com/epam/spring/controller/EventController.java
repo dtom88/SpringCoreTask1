@@ -39,18 +39,16 @@ public class EventController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Event> getAllEvent() {
+    public List<Event> getAllEvents() {
         return eventService.getAllEvent();
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Event> getForDateRange(@RequestParam Date from, @RequestParam Date to) {
+        if (to == null) {
+            return eventService.getNextEvents(from);
+        }
         return eventService.getForDateRange(from, to);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Event> getNextEvents(@RequestParam Date from) {
-        return eventService.getNextEvents(from);
     }
 
     @RequestMapping(value = "/{eventId}", method = RequestMethod.GET)
