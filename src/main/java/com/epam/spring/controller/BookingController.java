@@ -17,7 +17,6 @@ import java.util.List;
 /**
  * Created by Darya on 13-Feb-16.
  */
-@RequestMapping("/tickets")
 @Controller
 public class BookingController {
 
@@ -28,7 +27,7 @@ public class BookingController {
     @Autowired
     UserService userService;
 
-    @RequestMapping(value = "/events/{eventId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/events/{eventId}/tickets", method = RequestMethod.GET)
     public List<Ticket> getTicketsForEvent(@PathVariable Integer eventId) {
         Event event = eventService.getEventById(eventId);
         if (event == null) {
@@ -37,7 +36,7 @@ public class BookingController {
         return bookingService.getTicketsForEvent(event);
     }
 
-    @RequestMapping(value = "/price/event/{eventId}/user/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/events/{eventId}/users/{userId}/price", method = RequestMethod.GET)
     public Double getTicketPrice(@PathVariable Integer eventId, @PathVariable Integer userId) {
         User user = userService.getUserById(userId);
         Event event = eventService.getEventById(eventId);
@@ -47,7 +46,7 @@ public class BookingController {
         return bookingService.getTicketPrice(event, user);
     }
 
-    @RequestMapping(value = "/{ticketId}/user/{userId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/users/{userId}/tickets/{ticketId}", method = RequestMethod.PUT)
     public void bookTicket(@PathVariable Integer userId, @PathVariable Integer ticketId) {
         User user = userService.getUserById(userId);
         Ticket ticket = bookingService.getTicketById(ticketId);
