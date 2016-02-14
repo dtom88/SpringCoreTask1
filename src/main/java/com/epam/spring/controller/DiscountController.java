@@ -37,32 +37,9 @@ public class DiscountController {
         return discountService.getDiscount(user, event);
     }
 
-    @RequestMapping(value = "/users/{userId}/events/{eventId}/discounts", method = RequestMethod.GET)
-    public Boolean hasBirthdayDiscount(@PathVariable Integer userId, @PathVariable Integer eventId) {
-        User user = userService.getUserById(userId);
-        Event event = eventService.getEventById(eventId);
-        if (user == null || event == null) {
-            return null;
-        }
-        return discountService.hasBirthdayDiscount(user, event);
-    }
-
-    @RequestMapping(value = "/users/{userId}/discount", method = RequestMethod.GET)
-    public Boolean hasTenthTicketDiscount(@PathVariable Integer userId) {
-        User user = userService.getUserById(userId);
-        if (user == null) {
-            return null;
-        }
-        return discountService.hasTenthTicketDiscount(user);
-    }
-
     @RequestMapping(method = RequestMethod.GET)
     public List<DiscountStrategy> getAllDiscounts() {
         return discountService.getAllDiscounts();
     }
 
-    @RequestMapping(value = "/discounts/{name}", method = RequestMethod.GET)
-    public DiscountStrategy getDiscountByName(@PathVariable String name) {
-        return discountService.getDiscountByName(name);
-    }
 }
