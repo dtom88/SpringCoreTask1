@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 /**
  * Created by Darya on 13-Feb-16.
  */
@@ -22,12 +24,12 @@ public class AuditoriumController {
     @Autowired
     EventService eventService;
 
-    @RequestMapping(value = "/{audId}events/{eventId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{audId}/events/{eventId}", method = RequestMethod.PUT)
     public Boolean assignAuditorium(@PathVariable Integer eventId, @PathVariable Integer audId) {
         Event event = eventService.getEventById(eventId);
         Auditorium auditorium = auditoriumService.getAuditoriumById(audId);
         if (event == null || auditorium == null) {
-            return null;
+            return false;
         }
         return auditoriumService.assignAuditorium(event, auditorium);
     }
@@ -40,5 +42,10 @@ public class AuditoriumController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Auditorium getAuditoriumById(@PathVariable Integer id) {
         return auditoriumService.getAuditoriumById(id);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Auditorium> getAll() {
+        return auditoriumService.getAll();
     }
 }

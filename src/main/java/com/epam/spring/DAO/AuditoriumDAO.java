@@ -44,8 +44,8 @@ public class AuditoriumDAO {
             public Auditorium mapRow(ResultSet resultSet, int i) throws SQLException {
                 Integer id = resultSet.getInt("Id");
                 String name = resultSet.getString("Name");
-                Integer capasity = resultSet.getInt("capacity");
-                Auditorium auditorium = new Auditorium();
+                Integer capacity = resultSet.getInt("capacity");
+                Auditorium auditorium = new Auditorium(id, name, capacity);
                 return auditorium;
             }
         });
@@ -96,4 +96,5 @@ public class AuditoriumDAO {
         jdbcTemplate.update("insert into calendar (auditoriumid, date, eventid) values(?, ?, ?)",
                 auditorium.getId(), event.getDate(), event.getId());
     }
+
 }

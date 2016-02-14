@@ -66,4 +66,8 @@ public class AuditoriumService {
     public Auditorium getAuditoriumById(Integer id) {
         return auditoriumDAO.getAuditoriumById(id);
     }
+
+    public List<Auditorium> getAll() {
+        return auditoriumDAO.getAll();
+    }
 }
