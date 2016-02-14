@@ -45,11 +45,6 @@ public class UserController {
         return userService.getUsersByName(name);
     }
 
-    @RequestMapping(value = "/{userId}/tickets", method = RequestMethod.GET)
-    public Integer getBookedTickets(@PathVariable Integer userId) {
-        return userService.getBookedTickets(userId);
-    }
-
     @RequestMapping(method = RequestMethod.GET)
     public List<User> getAllUsers() {
         return userService.getAllUsers();
